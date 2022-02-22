@@ -4,7 +4,13 @@ import java.awt.*;
 
 public class GameSelectionPanel {
 
-    JPanel mainPanel = new JPanel();
+    static JPanel mainPanel = new JPanel();
+    static JButton overwatchButton = new JButton("Overwatch");
+    static JButton rocketLeagueButton = new JButton("Rocket League");
+    static JButton superSmashButton = new JButton("Rocket League");
+    static JButton leagueOfLegendsButton = new JButton("League of Legends");
+    static JButton chessButton = new JButton("Chess");
+
     GameSelectionPanel() {
         mainPanel.setLayout(null);
 
@@ -20,24 +26,24 @@ public class GameSelectionPanel {
         separator.setOrientation(SwingConstants.HORIZONTAL);
         mainPanel.add(separator);
 
-        JButton overwatchButton = new JButton("Overwatch");
         overwatchButton.setBounds(50, 300, 200, 200);
+        overwatchButton.addActionListener(new GUI());
         mainPanel.add(overwatchButton);
 
-        JButton rocketLeagueButton = new JButton("Rocket League");
         rocketLeagueButton.setBounds(300, 300, 200, 200);
+        rocketLeagueButton.addActionListener(new GUI());
         mainPanel.add(rocketLeagueButton);
 
-        JButton superSmashButton = new JButton("Rocket League");
         superSmashButton.setBounds(550, 300, 200, 200);
+        superSmashButton.addActionListener(new GUI());
         mainPanel.add(superSmashButton);
 
-        JButton leagueOfLegendsButton = new JButton("League of Legends");
         leagueOfLegendsButton.setBounds(800, 300, 200, 200);
+        leagueOfLegendsButton.addActionListener(new GUI());
         mainPanel.add(leagueOfLegendsButton);
 
-        JButton chessButton = new JButton("Chess");
         chessButton.setBounds(1050, 300, 200, 200);
+        chessButton.addActionListener(new GUI());
         mainPanel.add(chessButton);
     }
 
