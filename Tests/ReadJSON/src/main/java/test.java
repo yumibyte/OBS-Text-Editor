@@ -14,7 +14,7 @@ public class test {
 
 
             JSONObject j = new JSONObject(content);
-            j.getJSONObject("AuxAudioDevice1").put("balance", "test");
+            j.getJSONObject("sources").put("text", "test");
             System.out.println(j.get("AuxAudioDevice1"));
 
         } catch
