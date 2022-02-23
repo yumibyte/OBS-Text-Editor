@@ -14,6 +14,7 @@ public class GameSelectionPanel {
     GameSelectionPanel() {
         mainPanel.setLayout(null);
 
+        // header
         JLabel largeTitle = new JLabel("OBS Esports Editor");
         largeTitle.setFont(new Font("Serif",Font.BOLD, 30));
         largeTitle.setBounds(60, 20, 300, 100);
@@ -25,6 +26,8 @@ public class GameSelectionPanel {
         separator.setBorder(borderSeparator);
         separator.setOrientation(SwingConstants.HORIZONTAL);
         mainPanel.add(separator);
+
+        //co
 
         overwatchButton.setBounds(50, 300, 200, 200);
         overwatchButton.addActionListener(new GUI());

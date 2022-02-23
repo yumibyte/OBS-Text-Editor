@@ -6,11 +6,13 @@ import java.awt.event.ActionListener;
 
 public class GUI implements ActionListener {
 
-    public static GameSelectionPanel gameSelectionPanel = new GameSelectionPanel();
+    static GameSelectionPanel gameSelectionPanel = new GameSelectionPanel();
+    static GamePanel gamePanel = new GamePanel();
+    static JFrame frame = new JFrame("Esports OBS Editor");
+    public static String gameType = "";
 
     public static void main(String[] args) {
 
-        JFrame frame = new JFrame("Esports OBS Editor");
         frame.setSize(1300, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -18,12 +20,19 @@ public class GUI implements ActionListener {
         frame.setContentPane(gameSelectionPanel.retrievePanel());
         frame.setVisible(true);
 
+
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == gameSelectionPanel.overwatchButton) {
-            System.out.println("OW");
+            gameType = "Overwatch";
+            gamePanel = new GamePanel();
+            frame.setContentPane(gamePanel.retrievePanel());
+            frame.revalidate();
+
+
         }
 
         if (e.getSource() == gameSelectionPanel.rocketLeagueButton) {
