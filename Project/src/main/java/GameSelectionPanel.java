@@ -17,18 +17,17 @@ public class GameSelectionPanel {
         // header
         JLabel largeTitle = new JLabel("OBS Esports Editor");
         largeTitle.setFont(new Font("Serif",Font.BOLD, 30));
-        largeTitle.setBounds(60, 20, 300, 100);
+        largeTitle.setBounds(40, 50, 300, 100);
         mainPanel.add(largeTitle);
 
         JSeparator separator = new JSeparator();
-        separator.setBounds(50, 100, 1200, 1);
+        separator.setBounds(50, 130, 1200, 1);
         Border borderSeparator = BorderFactory.createLineBorder(Color.BLACK, 5);
         separator.setBorder(borderSeparator);
         separator.setOrientation(SwingConstants.HORIZONTAL);
         mainPanel.add(separator);
 
-        //co
-
+        // contents
         overwatchButton.setBounds(50, 300, 200, 200);
         overwatchButton.addActionListener(new GUI());
         mainPanel.add(overwatchButton);
@@ -50,7 +49,7 @@ public class GameSelectionPanel {
         mainPanel.add(chessButton);
     }
 
-    JPanel retrievePanel() {
+    static JPanel retrievePanel() {
         return mainPanel;
     }
 
