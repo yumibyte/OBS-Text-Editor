@@ -7,7 +7,7 @@ public class GameSelectionPanel {
     static JPanel mainPanel = new JPanel();
     static JButton overwatchButton = new JButton("Overwatch");
     static JButton rocketLeagueButton = new JButton("Rocket League");
-    static JButton superSmashButton = new JButton("Rocket League");
+    static JButton superSmashButton = new JButton("Super Smash Bros");
     static JButton leagueOfLegendsButton = new JButton("League of Legends");
     static JButton chessButton = new JButton("Chess");
 
@@ -17,7 +17,7 @@ public class GameSelectionPanel {
         // header
         JLabel largeTitle = new JLabel("OBS Esports Editor");
         largeTitle.setFont(new Font("Serif",Font.BOLD, 30));
-        largeTitle.setBounds(40, 50, 300, 100);
+        largeTitle.setBounds(50, 50, 300, 100);
         mainPanel.add(largeTitle);
 
         JSeparator separator = new JSeparator();

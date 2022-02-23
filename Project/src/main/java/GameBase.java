@@ -6,11 +6,10 @@ public class GameBase {
 
         public static GamePanel gamePanel;
         public String title = "";
-        public String gameType = "";
+        public static String gameType = "";
         private int isSortByPlayerTypeSelected = 0;
-        public int numberOfPlayers = 0;
+        public static int numberOfPlayers = 0;
         public String[] availablePlayers = new String[numberOfPlayers];
-
 
 
         // sorting/search functions

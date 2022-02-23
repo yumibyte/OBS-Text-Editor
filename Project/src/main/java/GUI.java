@@ -10,6 +10,7 @@ public class GUI implements ActionListener {
     static GameBase.GameBaseFunctionality gameBaseFunctionality = new GameBase.GameBaseFunctionality();
     static GamePanel gamePanel = new GamePanel();
     static JFrame frame = new JFrame("Esports OBS Editor");
+    static JPanel mainPanel = new JPanel();
 
     public static void main(String[] args) {
 
@@ -17,7 +18,8 @@ public class GUI implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // default to game selection
-        frame.setContentPane(gameSelectionPanel.retrievePanel());
+        mainPanel = gameSelectionPanel.retrievePanel();
+        frame.setContentPane(mainPanel);
         frame.setVisible(true);
 
     }
@@ -25,8 +27,13 @@ public class GUI implements ActionListener {
     public void swapToGamePanel() {
         // swap panels
         gamePanel = new GamePanel();
-        frame.setContentPane(gamePanel.retrievePanel());
-        frame.revalidate();
+        mainPanel = gamePanel.retrievePanel();
+        frame.setContentPane(mainPanel);
+        mainPanel.revalidate();
+        frame.repaint();
+
+
+
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -35,50 +42,59 @@ public class GUI implements ActionListener {
             //set initial values for gametype
             gameBaseFunctionality.numberOfPlayers = 6;
             gameBaseFunctionality.gameType = "Overwatch";
+            gamePanel.gameTitleType = "Opposing Team Name";
 
             swapToGamePanel();
 
         }
 
-        if (e.getSource() == gameSelectionPanel.rocketLeagueButton) {
+        else if (e.getSource() == gameSelectionPanel.rocketLeagueButton) {
 
             //set initial values for gametype
             gameBaseFunctionality.numberOfPlayers = 8;
             gameBaseFunctionality.gameType = "Rocket League";
+            gamePanel.gameTitleType = "Opposing Team Name";
 
             swapToGamePanel();
         }
 
-        if (e.getSource() == gameSelectionPanel.superSmashButton) {
+
+        else if (e.getSource() == gameSelectionPanel.superSmashButton) {
             //set initial values for gametype
             gameBaseFunctionality.numberOfPlayers = 1;
-            gameBaseFunctionality.gameType = "Super Smash Bros Ultimate";
+            gameBaseFunctionality.gameType = "Super Smash Bros";
+            gamePanel.gameTitleType = "Player Name";
 
             swapToGamePanel();
         }
 
-        if (e.getSource() == gameSelectionPanel.leagueOfLegendsButton) {
+        else if (e.getSource() == gameSelectionPanel.leagueOfLegendsButton) {
             //set initial values for gametype
             gameBaseFunctionality.numberOfPlayers = 5;
             gameBaseFunctionality.gameType = "League of Legends";
+            gamePanel.gameTitleType = "Opposing Team Name";
 
             swapToGamePanel();
         }
 
-        if (e.getSource() == gameSelectionPanel.chessButton) {
+        else if (e.getSource() == gameSelectionPanel.chessButton) {
             //set initial values for gametype
             gameBaseFunctionality.numberOfPlayers = 1;
             gameBaseFunctionality.gameType = "Chess";
+            gamePanel.gameTitleType = "Player Name";
 
             swapToGamePanel();
         }
 
-        if (e.getSource() == gamePanel.backButton) {
-            gameSelectionPanel = new GameSelectionPanel();
+        else if (e.getSource() == gamePanel.backButton) {
+
             frame.setContentPane(gameSelectionPanel.retrievePanel());
             frame.revalidate();
+            frame.repaint();
+
+
         }
 
-        //
+
     }
 }
