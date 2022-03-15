@@ -28,6 +28,9 @@ public class GUI implements ActionListener {
         // swap panels
         gamePanel = new GamePanel();
         mainPanel = gamePanel.retrievePanel();
+
+        // TODO create scroll pane
+
         frame.setContentPane(mainPanel);
         mainPanel.revalidate();
         frame.repaint();
@@ -57,7 +60,6 @@ public class GUI implements ActionListener {
 
             swapToGamePanel();
         }
-
 
         else if (e.getSource() == gameSelectionPanel.superSmashButton) {
             //set initial values for gametype
@@ -91,8 +93,20 @@ public class GUI implements ActionListener {
             frame.setContentPane(gameSelectionPanel.retrievePanel());
             frame.revalidate();
             frame.repaint();
+        }
 
+        else if (e.getSource() == gamePanel.streamTitleTextField) {
+            gamePanel.streamPreviewTitleLabel.setText("Title: Super Smash Bros - Drakkar - " + gamePanel.streamTitleTextField.getText());
+        }
 
+        else if (e.getSource() == gamePanel.player1Dropdown) {
+//            System.out.println()
+            gamePanel.player1Dropdown.setSelectedIndex(gamePanel.player1Dropdown.getSelectedIndex());
+            gamePanel.streamPreviewPlayerSelectedLabel.setText("Roster: " + gamePanel.player1Dropdown.getSelectedItem());
+        }
+
+        else if (e.getSource() == gamePanel.generateStreamButton) {
+            gameBaseFunctionality.generateStream("Title: Super Smash Bros - Drakkar - " + gamePanel.streamTitleTextField.getText());
         }
 
 
