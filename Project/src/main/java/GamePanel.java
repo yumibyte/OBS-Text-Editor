@@ -14,15 +14,28 @@ public class GamePanel {
     static JTextField streamTitleTextField = new JTextField();
     static JLabel streamTitle = new JLabel("");
 
+    static JLabel player1 = new JLabel("Player 1");
+    static JLabel player2 = new JLabel("Player 2");
+    static JLabel player3 = new JLabel("Player 3");
+
+    static String[] superSmashPlayerOptions = {"Matthew Chance Lopez","Mason Harder","Jordan Hopper","Noah","Gavin Phillian"};
+    static JComboBox player1Dropdown = new JComboBox(superSmashPlayerOptions);
+
+    static JButton generateStreamButton = new JButton("Generate Stream");
+
+    static JLabel streamPreviewTitleLabel = new JLabel("");
+    static JLabel streamPreviewPlayerSelectedLabel = new JLabel("");
     GamePanel() {
 
         mainPanel.setLayout(null);
+
+
+
 
         // header
         backButton.setBounds(10, 10, 100, 50);
         if (backButton.getActionListeners().length == 0) {
             backButton.addActionListener(new GUI());
-
         }
         mainPanel.add(backButton);
 
@@ -44,7 +57,7 @@ public class GamePanel {
         gameTitleLabel.setBounds(900, 50, 300, 100);
         mainPanel.add(gameTitleLabel);
 
-        // contents
+        // CONTENTS
 
         // stream title
         streamTitle.setText(gameTitleType);
@@ -55,14 +68,59 @@ public class GamePanel {
 
         streamTitleTextField.setBounds(xSelection, 220, 500, 70);
         streamTitleTextField.addActionListener(new GUI());
-
         mainPanel.add(streamTitleTextField);
 
+        // Player 1
+        // combobox
+
+        player1.setFont(new Font("Serif",Font.BOLD, 25));
+        player1.setForeground(Color.darkGray);
+        player1.setBounds(xSelection, 280, 300, 100);
+        mainPanel.add(player1);
+
+        player1Dropdown.setBounds(xSelection, 340, 300, 100);
+        player1Dropdown.addActionListener(new GUI());
+        mainPanel.add(player1Dropdown);
+
+        // generate stream
+
+        generateStreamButton.setFont(new Font("Serif",Font.BOLD, 25));
+        generateStreamButton.setBackground(Color.blue);
+        generateStreamButton.setForeground(Color.white);
+        generateStreamButton.setOpaque(true);
+        generateStreamButton.setBounds(500, 500, 300, 100);
+        generateStreamButton.addActionListener(new GUI());
+        mainPanel.add(generateStreamButton);
+
+        // PREVIEW PANEL
+        JLabel streamPreviewLabel = new JLabel("Stream Preview");
+        streamPreviewLabel.setFont(new Font("Serif",Font.BOLD, 25));
+        streamPreviewLabel.setForeground(Color.gray);
+        streamPreviewLabel.setBounds(700, 130, 300, 100);
+        mainPanel.add(streamPreviewLabel);
+
+        streamPreviewTitleLabel.setFont(new Font("Serif",Font.PLAIN, 15));
+        streamPreviewTitleLabel.setForeground(Color.gray);
+        streamPreviewTitleLabel.setBounds(700, 180, 500, 100);
+        mainPanel.add(streamPreviewTitleLabel);
+
+        streamPreviewPlayerSelectedLabel.setFont(new Font("Serif",Font.PLAIN, 15));
+        streamPreviewPlayerSelectedLabel.setForeground(Color.gray);
+        streamPreviewPlayerSelectedLabel.setBounds(700, 200, 500, 100);
+        mainPanel.add(streamPreviewPlayerSelectedLabel);
+
+        JSeparator separatorPreview = new JSeparator();
+        separatorPreview.setBounds(650, 150, 1, 300);
+        Border borderSeparatorPreview = BorderFactory.createLineBorder(Color.BLACK, 5);
+        separatorPreview.setBorder(borderSeparatorPreview);
+        separatorPreview.setOrientation(SwingConstants.VERTICAL);
+        mainPanel.add(separatorPreview);
 
     }
 
     public JPanel retrievePanel() {
         return mainPanel;
     }
+
 
 }
