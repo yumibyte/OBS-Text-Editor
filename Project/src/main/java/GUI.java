@@ -26,7 +26,6 @@ public class GUI implements ActionListener {
 
     public void swapToGamePanel() {
         // swap panels
-        gamePanel = new GamePanel();
         mainPanel = gamePanel.retrievePanel();
 
         // TODO create scroll pane

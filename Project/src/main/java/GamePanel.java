@@ -29,9 +29,6 @@ public class GamePanel {
 
         mainPanel.setLayout(null);
 
-
-
-
         // header
         backButton.setBounds(10, 10, 100, 50);
         if (backButton.getActionListeners().length == 0) {

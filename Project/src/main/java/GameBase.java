@@ -1,9 +1,4 @@
 import jdk.nashorn.internal.parser.JSONParser;
-import org.json.JSONArray;
-
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -35,6 +30,8 @@ public class GameBase {
         }
 
         public void generateStream(String gameType) {
+
+
 
             System.out.println("generated stream!");
 
