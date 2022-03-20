@@ -12,10 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-
-
-
-
 public class GameBase {
 
     public static class GameBaseFunctionality {
@@ -40,28 +36,7 @@ public class GameBase {
 
         public void generateStream(String gameType) {
 
-            try {
-                String content = new String(Files.readAllBytes(Paths.get("/Users/ashleyraigosa/Desktop/Programming/OBSTextEditor/Project/src/main/java/EsportsTest.json")));
-
-
-                JSONObject j = new JSONObject(content);
-
-                String k = j.getString("sources");
-                k = k.replace("sample text", "test");
-
-                j.put("sources", k);
-
-
-                System.out.println(j.getString("sources"));
-
-
-            } catch
-            (FileNotFoundException e) {e.printStackTrace();} catch (JSONException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+            System.out.println("generated stream!");
 
         }
 
