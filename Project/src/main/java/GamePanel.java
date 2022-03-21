@@ -31,9 +31,8 @@ public class GamePanel {
 
         // header
         backButton.setBounds(10, 10, 100, 50);
-        if (backButton.getActionListeners().length == 0) {
-            backButton.addActionListener(new GUI());
-        }
+
+        backButton.addActionListener(new GUI());
         mainPanel.add(backButton);
 
         JLabel largeTitle = new JLabel("OBS Esports Editor");
@@ -48,7 +47,6 @@ public class GamePanel {
         separator.setOrientation(SwingConstants.HORIZONTAL);
         mainPanel.add(separator);
 
-        gameTitleLabel.setText(GUI.gameBaseFunctionality.gameType);
         gameTitleLabel.setFont(new Font("Serif",Font.BOLD, 30));
         gameTitleLabel.setForeground(Color.gray);
         gameTitleLabel.setBounds(900, 50, 300, 100);
@@ -81,6 +79,7 @@ public class GamePanel {
 
         // generate stream
 
+//        generateStreamButton = new JButton("Generate Stream");
         generateStreamButton.setFont(new Font("Serif",Font.BOLD, 25));
         generateStreamButton.setBackground(Color.blue);
         generateStreamButton.setForeground(Color.white);
