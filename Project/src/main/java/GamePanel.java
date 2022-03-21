@@ -25,18 +25,15 @@ public class GamePanel {
 
     static JLabel streamPreviewTitleLabel = new JLabel("");
     static JLabel streamPreviewPlayerSelectedLabel = new JLabel("");
+
     GamePanel() {
 
         mainPanel.setLayout(null);
 
-
-
-
         // header
         backButton.setBounds(10, 10, 100, 50);
-        if (backButton.getActionListeners().length == 0) {
-            backButton.addActionListener(new GUI());
-        }
+
+        backButton.addActionListener(new GUI());
         mainPanel.add(backButton);
 
         JLabel largeTitle = new JLabel("OBS Esports Editor");
@@ -51,7 +48,6 @@ public class GamePanel {
         separator.setOrientation(SwingConstants.HORIZONTAL);
         mainPanel.add(separator);
 
-        gameTitleLabel.setText(GUI.gameBaseFunctionality.gameType);
         gameTitleLabel.setFont(new Font("Serif",Font.BOLD, 30));
         gameTitleLabel.setForeground(Color.gray);
         gameTitleLabel.setBounds(900, 50, 300, 100);
@@ -73,17 +69,27 @@ public class GamePanel {
         // Player 1
         // combobox
 
+        JPanel test = new JPanel();
+        test.setBounds(50, 300, 200, 200);
         player1.setFont(new Font("Serif",Font.BOLD, 25));
         player1.setForeground(Color.darkGray);
         player1.setBounds(xSelection, 280, 300, 100);
-        mainPanel.add(player1);
+        test.add(player1);
 
         player1Dropdown.setBounds(xSelection, 340, 300, 100);
         player1Dropdown.addActionListener(new GUI());
-        mainPanel.add(player1Dropdown);
+        test.add(player1Dropdown);
+
+        JScrollPane scrollPane = new JScrollPane(test);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+//        scrollPane.setBounds(50, 300, 200, 200);
+
+        mainPanel.add(scrollPane);
 
         // generate stream
 
+//        generateStreamButton = new JButton("Generate Stream");
         generateStreamButton.setFont(new Font("Serif",Font.BOLD, 25));
         generateStreamButton.setBackground(Color.blue);
         generateStreamButton.setForeground(Color.white);

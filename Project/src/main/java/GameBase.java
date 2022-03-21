@@ -1,9 +1,4 @@
 import jdk.nashorn.internal.parser.JSONParser;
-import org.json.JSONArray;
-
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -19,7 +14,6 @@ public class GameBase {
         private static FileWriter file;
 
         public static GamePanel gamePanel;
-        public String title = "";
         public static String gameType = "";
         private int isSortByPlayerTypeSelected = 0;
         public static int numberOfPlayers = 0;
@@ -34,9 +28,15 @@ public class GameBase {
             return roster;
         }
 
-        public void generateStream(String gameType) {
+        public void generateStream() {
 
+            // determine title based on game type
             System.out.println("generated stream!");
+
+            // update stream title
+
+            // update roster
+
 
         }
 

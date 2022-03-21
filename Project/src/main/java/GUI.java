@@ -5,10 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUI implements ActionListener {
-
+    static GamePanel gamePanel = new GamePanel();
     static GameSelectionPanel gameSelectionPanel = new GameSelectionPanel();
     static GameBase.GameBaseFunctionality gameBaseFunctionality = new GameBase.GameBaseFunctionality();
-    static GamePanel gamePanel = new GamePanel();
     static JFrame frame = new JFrame("Esports OBS Editor");
     static JPanel mainPanel = new JPanel();
 
@@ -26,15 +25,17 @@ public class GUI implements ActionListener {
 
     public void swapToGamePanel() {
         // swap panels
-        gamePanel = new GamePanel();
+
         mainPanel = gamePanel.retrievePanel();
 
         // TODO create scroll pane
 
         frame.setContentPane(mainPanel);
-        mainPanel.revalidate();
-        frame.repaint();
 
+        frame.revalidate();
+        frame.repaint();
+        mainPanel.revalidate();
+        mainPanel.repaint();
 
 
     }
@@ -44,9 +45,9 @@ public class GUI implements ActionListener {
 
             //set initial values for gametype
             gameBaseFunctionality.numberOfPlayers = 6;
+            gamePanel.gameTitleLabel.setText("Overwatch");
             gameBaseFunctionality.gameType = "Overwatch";
-            gamePanel.gameTitleType = "Opposing Team Name";
-
+            gamePanel.streamTitle.setText("Opposing Team Name");
             swapToGamePanel();
 
         }
@@ -55,8 +56,9 @@ public class GUI implements ActionListener {
 
             //set initial values for gametype
             gameBaseFunctionality.numberOfPlayers = 8;
+            gamePanel.gameTitleLabel.setText("Rocket League");
             gameBaseFunctionality.gameType = "Rocket League";
-            gamePanel.gameTitleType = "Opposing Team Name";
+            gamePanel.streamTitle.setText("Opposing Team Name");
 
             swapToGamePanel();
         }
@@ -64,8 +66,9 @@ public class GUI implements ActionListener {
         else if (e.getSource() == gameSelectionPanel.superSmashButton) {
             //set initial values for gametype
             gameBaseFunctionality.numberOfPlayers = 1;
+            gamePanel.gameTitleLabel.setText("Super Smash Bros");
             gameBaseFunctionality.gameType = "Super Smash Bros";
-            gamePanel.gameTitleType = "Player Name";
+            gamePanel.streamTitle.setText("Player Name");
 
             swapToGamePanel();
         }
@@ -73,8 +76,9 @@ public class GUI implements ActionListener {
         else if (e.getSource() == gameSelectionPanel.leagueOfLegendsButton) {
             //set initial values for gametype
             gameBaseFunctionality.numberOfPlayers = 5;
+            gamePanel.gameTitleLabel.setText("League of Legends");
             gameBaseFunctionality.gameType = "League of Legends";
-            gamePanel.gameTitleType = "Opposing Team Name";
+            gamePanel.streamTitle.setText("Opposing Team Name");
 
             swapToGamePanel();
         }
@@ -82,21 +86,45 @@ public class GUI implements ActionListener {
         else if (e.getSource() == gameSelectionPanel.chessButton) {
             //set initial values for gametype
             gameBaseFunctionality.numberOfPlayers = 1;
+            gamePanel.gameTitleLabel.setText("Chess");
             gameBaseFunctionality.gameType = "Chess";
-            gamePanel.gameTitleType = "Player Name";
+            gamePanel.streamTitle.setText("Player Name");
 
             swapToGamePanel();
         }
 
         else if (e.getSource() == gamePanel.backButton) {
 
+            System.out.println("back");
             frame.setContentPane(gameSelectionPanel.retrievePanel());
             frame.revalidate();
             frame.repaint();
         }
 
         else if (e.getSource() == gamePanel.streamTitleTextField) {
-            gamePanel.streamPreviewTitleLabel.setText("Title: Super Smash Bros - Drakkar - " + gamePanel.streamTitleTextField.getText());
+
+            String inputTitle = gamePanel.streamTitleTextField.getText();
+            String title = "";
+
+            switch (gameBaseFunctionality.gameType) {
+                case "Overwatch":
+                    title = "Oakmont Fenrir vs " + inputTitle + " | PlayVS                                  ";
+                    break;
+                case "Rocket League":
+                    title = "Oakmont Ragnarok vs " + inputTitle + " | Varsity Rocket League                 ";
+                    break;
+                case "League of Legends":
+                    title = "Oakmont Berserkers vs " + inputTitle + " | Varsity LoL                         ";
+                    break;
+                case "Super Smash Bros":
+                    title = inputTitle + " | Oakmont Drakkar | Varsity SSBU                                 ";
+                    break;
+                case "Chess":
+                    title = inputTitle + " | Chess | Oakmont Esports                                        ";
+                    break;
+
+            }
+            gamePanel.streamPreviewTitleLabel.setText(title);
         }
 
         else if (e.getSource() == gamePanel.player1Dropdown) {
@@ -106,7 +134,7 @@ public class GUI implements ActionListener {
         }
 
         else if (e.getSource() == gamePanel.generateStreamButton) {
-            gameBaseFunctionality.generateStream("Title: Super Smash Bros - Drakkar - " + gamePanel.streamTitleTextField.getText());
+            gameBaseFunctionality.generateStream();
         }
 
 
