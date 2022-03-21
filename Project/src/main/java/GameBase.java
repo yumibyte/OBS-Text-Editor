@@ -33,6 +33,11 @@ public class GameBase {
             // determine title based on game type
             System.out.println("generated stream!");
 
+            // update stream title
+
+            // update roster
+
+
         }
 
         public ArrayList<String> sortAlphabetically(ArrayList<String> availablePlayers) {
