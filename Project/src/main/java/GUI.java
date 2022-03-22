@@ -15,6 +15,7 @@ public class GUI implements ActionListener {
 
         frame.setSize(1300, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
 
         // default to game selection
         mainPanel = gameSelectionPanel.retrievePanel();
