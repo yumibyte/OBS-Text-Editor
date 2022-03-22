@@ -21,12 +21,13 @@ public class GamePanel {
     static JComboBox playerDropdown;
     static JComboBox playerTypeDropdown;
     static JButton clearRosterButton;
+    static JButton filterButton;
+    static ImageIcon filterIcon;
 
     // stream preview
     static JTextArea streamPreviewLabel = new JTextArea("");
     static JLabel streamPreviewPlayerSelectedLabel = new JLabel("");
     // stream preview roster
-
     static ArrayList<String> selectedPlayers = new ArrayList<String>();
     static ArrayList<String> selectedPlayerTypes = new ArrayList<String>();
     static String title = "";
@@ -89,7 +90,7 @@ public class GamePanel {
         mainPanel.add(rosterSelectionPlayerTypeLabel);
 
         playerTypeDropdown = new JComboBox(GUI.gameBaseFunctionality.availablePlayerTypes.toArray());
-        playerTypeDropdown.setBounds(xSelection - 5, 370, 300, 100);
+        playerTypeDropdown.setBounds(xSelection - 5, 400, 300, 40);
         playerTypeDropdown.addActionListener(new GUI());
         mainPanel.add(playerTypeDropdown);
 
@@ -99,8 +100,18 @@ public class GamePanel {
         rosterSelectionPlayerNameLabel.setBounds(xSelection + 5, 405, 300, 100);
         mainPanel.add(rosterSelectionPlayerNameLabel);
 
+//        ImageIcon icon = new ImageIcon("src/main/java/filterSymbol.png");
+        filterIcon = new ImageIcon(new ImageIcon("src/main/java/filterSymbol.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+
+        filterButton = new JButton(filterIcon);
+        filterButton.setFont(new Font("Serif",Font.PLAIN, 15));
+        filterButton.setForeground(Color.darkGray);
+        filterButton.setBounds(xSelection + 250, 435, 40, 40);
+        filterButton.addActionListener(new GUI());
+        mainPanel.add(filterButton);
+
         playerDropdown = new JComboBox(GUI.gameBaseFunctionality.availablePlayers.toArray());
-        playerDropdown.setBounds(xSelection - 5, 440, 300, 100);
+        playerDropdown.setBounds(xSelection - 5, 470, 300, 40);
         playerDropdown.addActionListener(new GUI());
         mainPanel.add(playerDropdown);
 

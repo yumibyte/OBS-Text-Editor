@@ -25,7 +25,7 @@ public class GameBase {
 
         // read roster and initialize variables
         public void readRoster() {
-            File rosterFile = new File("/Users/ashleyraigosa/Desktop/Programming/OBSTextEditor/Project/src/main/java/Main Roster Database - Tracker.tsv");
+            File rosterFile = new File("src/main/java/Main Roster Database - Tracker.tsv");
 
             try (BufferedReader TSVReader = new BufferedReader(new FileReader(rosterFile))) {
 
@@ -39,41 +39,46 @@ public class GameBase {
                 e.printStackTrace();
             }
 
-            determineAvailablePlayers();
+            ArrayList<String> noFilter = new ArrayList<String>();
+            noFilter.add("None");
+            determineAvailablePlayers(noFilter);
         }
 
         // create list of available players depending upon gameType
-        public void determineAvailablePlayers() {
+        public void determineAvailablePlayers(ArrayList<String> filteringType) {
+
 
             availablePlayerTypes.clear();
             availablePlayers.clear();
-            
-            // determine available player types
-            switch (gameType) {
-                case "LoL (Berserkers)":
-                    availablePlayerTypes.add("Assassin");
-                    availablePlayerTypes.add("Fighter");
-                    availablePlayerTypes.add("Mage");
-                    availablePlayerTypes.add("Marksman");
-                    availablePlayerTypes.add("Support");
-                    availablePlayerTypes.add("Tank");
-                    break;
-                case "OW (Fenrir)":
-                    availablePlayerTypes.add("Offense");
-                    availablePlayerTypes.add("Defense");
-                    availablePlayerTypes.add("Support");
-                    availablePlayerTypes.add("Tank");
-                    break;
-            }
 
-            // determine available players
-
-
-            for (int i = 0; i < rosterData.size(); i ++) {
-                if (rosterData.get(i)[3].equals(gameType)) {
-                    availablePlayers.add(rosterData.get(i)[0]);
-                    System.out.println("added players");
+            // Filter by player types
+            if (filteringType.contains("Team Assignment")) {
+                switch (gameType) {
+                    case "LoL (Berserkers)":
+                        availablePlayerTypes.add("Assassin");
+                        availablePlayerTypes.add("Fighter");
+                        availablePlayerTypes.add("Mage");
+                        availablePlayerTypes.add("Marksman");
+                        availablePlayerTypes.add("Support");
+                        availablePlayerTypes.add("Tank");
+                        break;
+                    case "OW (Fenrir)":
+                        availablePlayerTypes.add("Offense");
+                        availablePlayerTypes.add("Defense");
+                        availablePlayerTypes.add("Support");
+                        availablePlayerTypes.add("Tank");
+                        break;
                 }
+
+                // determine available players
+                for (int i = 0; i < rosterData.size(); i ++) {
+                    if (rosterData.get(i)[3].equals(gameType)) {
+                        availablePlayers.add(rosterData.get(i)[0]);
+                        System.out.println("added players");
+                    }
+                }
+                System.out.println("team assignment");
+
             }
 
             // refresh comboboxes
@@ -84,14 +89,6 @@ public class GameBase {
 
 
 
-        }
-
-        // sorting/search functions
-        public ArrayList<String> parseRoster(String gameType) {
-            //
-            ArrayList<String> roster = new ArrayList<String>();
-
-            return roster;
         }
 
         public void generateStream() {

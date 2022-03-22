@@ -3,6 +3,8 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GUI implements ActionListener {
     static GamePanel gamePanel = new GamePanel();
@@ -28,7 +30,10 @@ public class GUI implements ActionListener {
     public void swapToGamePanel() {
         // swap panels
         mainPanel = gamePanel.retrievePanel();
-        gameBaseFunctionality.determineAvailablePlayers();
+
+        ArrayList<String> noFilter = new ArrayList<String>();
+        noFilter.add("None");
+        gameBaseFunctionality.determineAvailablePlayers(noFilter);
 
 
         // TODO create scroll pane
@@ -146,7 +151,21 @@ public class GUI implements ActionListener {
             gamePanel.selectedPlayerTypes.clear();
             gamePanel.selectedPlayers.clear();
             gamePanel.updateStreamPreview();
+        }
 
+        else if (e.getSource() == gamePanel.filterButton) {
+            // prompt for type of filtering
+            String[] filterOptions = {"Alphabetically", "Sport Type", "Team Assignment"};
+            JList list = new JList(filterOptions);
+            list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            JOptionPane.showMessageDialog(null, new JScrollPane(list), "Filtering Options", JOptionPane.QUESTION_MESSAGE, gamePanel.filterIcon);
+            ArrayList<String> selectedFilters = new ArrayList<String>();
+
+            for (Object value: list.getSelectedValues()) {
+                selectedFilters.add(value.toString());
+            }
+            
+            gameBaseFunctionality.determineAvailablePlayers(selectedFilters);
         }
     }
 }
