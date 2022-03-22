@@ -6,8 +6,9 @@ import java.awt.event.ActionListener;
 
 public class GUI implements ActionListener {
     static GamePanel gamePanel = new GamePanel();
-    static GameSelectionPanel gameSelectionPanel = new GameSelectionPanel();
     static GameBase.GameBaseFunctionality gameBaseFunctionality = new GameBase.GameBaseFunctionality();
+
+    static GameSelectionPanel gameSelectionPanel = new GameSelectionPanel();
     static JFrame frame = new JFrame("Esports OBS Editor");
     static JPanel mainPanel = new JPanel();
 
@@ -26,8 +27,9 @@ public class GUI implements ActionListener {
 
     public void swapToGamePanel() {
         // swap panels
-
         mainPanel = gamePanel.retrievePanel();
+        gameBaseFunctionality.determineAvailablePlayers();
+
 
         // TODO create scroll pane
 
@@ -47,7 +49,7 @@ public class GUI implements ActionListener {
             //set initial values for gametype
             gameBaseFunctionality.numberOfPlayers = 6;
             gamePanel.gameTitleLabel.setText("Overwatch");
-            gameBaseFunctionality.gameType = "Overwatch";
+            gameBaseFunctionality.gameType = "OW (Fenrir)";
             gamePanel.streamTitle.setText("Opposing Team Name");
             swapToGamePanel();
 
@@ -58,7 +60,7 @@ public class GUI implements ActionListener {
             //set initial values for gametype
             gameBaseFunctionality.numberOfPlayers = 8;
             gamePanel.gameTitleLabel.setText("Rocket League");
-            gameBaseFunctionality.gameType = "Rocket League";
+            gameBaseFunctionality.gameType = "RL (Ragnarok)";
             gamePanel.streamTitle.setText("Opposing Team Name");
 
             swapToGamePanel();
@@ -68,7 +70,7 @@ public class GUI implements ActionListener {
             //set initial values for gametype
             gameBaseFunctionality.numberOfPlayers = 1;
             gamePanel.gameTitleLabel.setText("Super Smash Bros");
-            gameBaseFunctionality.gameType = "Super Smash Bros";
+            gameBaseFunctionality.gameType = "SSBU (Drakkar)";
             gamePanel.streamTitle.setText("Player Name");
 
             swapToGamePanel();
@@ -78,7 +80,7 @@ public class GUI implements ActionListener {
             //set initial values for gametype
             gameBaseFunctionality.numberOfPlayers = 5;
             gamePanel.gameTitleLabel.setText("League of Legends");
-            gameBaseFunctionality.gameType = "League of Legends";
+            gameBaseFunctionality.gameType = "LoL (Berserkers)";
             gamePanel.streamTitle.setText("Opposing Team Name");
 
             swapToGamePanel();
@@ -95,8 +97,6 @@ public class GUI implements ActionListener {
         }
 
         else if (e.getSource() == gamePanel.backButton) {
-
-            System.out.println("back");
             frame.setContentPane(gameSelectionPanel.retrievePanel());
             frame.revalidate();
             frame.repaint();

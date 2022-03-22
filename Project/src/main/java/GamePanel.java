@@ -18,7 +18,6 @@ public class GamePanel {
     static JLabel streamTitle = new JLabel("");
 
     // roster
-    static String[] superSmashPlayerOptions = {"Matthew Chance Lopez","Mason Harder","Jordan Hopper","Noah","Gavin Phillian"};
     static JComboBox playerDropdown;
     static JComboBox playerTypeDropdown;
     static JButton clearRosterButton;
@@ -89,7 +88,7 @@ public class GamePanel {
         rosterSelectionPlayerTypeLabel.setBounds(xSelection + 5, 335, 300, 100);
         mainPanel.add(rosterSelectionPlayerTypeLabel);
 
-        playerTypeDropdown = new JComboBox(superSmashPlayerOptions);
+        playerTypeDropdown = new JComboBox(GUI.gameBaseFunctionality.availablePlayerTypes.toArray());
         playerTypeDropdown.setBounds(xSelection - 5, 370, 300, 100);
         playerTypeDropdown.addActionListener(new GUI());
         mainPanel.add(playerTypeDropdown);
@@ -100,7 +99,7 @@ public class GamePanel {
         rosterSelectionPlayerNameLabel.setBounds(xSelection + 5, 405, 300, 100);
         mainPanel.add(rosterSelectionPlayerNameLabel);
 
-        playerDropdown = new JComboBox(superSmashPlayerOptions);
+        playerDropdown = new JComboBox(GUI.gameBaseFunctionality.availablePlayers.toArray());
         playerDropdown.setBounds(xSelection - 5, 440, 300, 100);
         playerDropdown.addActionListener(new GUI());
         mainPanel.add(playerDropdown);
