@@ -115,16 +115,16 @@ public class GUI implements ActionListener {
             String inputTitle = gamePanel.streamTitleTextField.getText();
 
             switch (gameBaseFunctionality.gameType) {
-                case "Overwatch":
+                case "OW (Fenrir)":
                     gamePanel.title = "Oakmont Fenrir vs " + inputTitle + " | PlayVS                                  ";
                     break;
-                case "Rocket League":
+                case "RL (Ragnarok)":
                     gamePanel.title = "Oakmont Ragnarok vs " + inputTitle + " | Varsity Rocket League                 ";
                     break;
-                case "League of Legends":
+                case "LoL (Berserkers)":
                     gamePanel.title = "Oakmont Berserkers vs " + inputTitle + " | Varsity LoL                         ";
                     break;
-                case "Super Smash Bros":
+                case "SSBU (Drakkar)":
                     gamePanel.title = inputTitle + " | Oakmont Drakkar | Varsity SSBU                                 ";
                     break;
                 case "Chess":

@@ -183,6 +183,7 @@ public class GamePanel {
 
         String streamPreviewString = "";
 
+        System.out.println(title);
         streamPreviewString += title + "\n\n" +
                 "Roster: \n";
 
@@ -195,9 +196,6 @@ public class GamePanel {
             }
         }
 
-
-
-        System.out.println(streamPreviewString);
         streamPreviewLabel.setText(streamPreviewString);
 
 
