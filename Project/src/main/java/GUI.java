@@ -15,7 +15,7 @@ public class GUI implements ActionListener {
 
         frame.setSize(1300, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+
 
         // default to game selection
         mainPanel = gameSelectionPanel.retrievePanel();
@@ -105,39 +105,52 @@ public class GUI implements ActionListener {
         else if (e.getSource() == gamePanel.streamTitleTextField) {
 
             String inputTitle = gamePanel.streamTitleTextField.getText();
-            String title = "";
 
             switch (gameBaseFunctionality.gameType) {
                 case "Overwatch":
-                    title = "Oakmont Fenrir vs " + inputTitle + " | PlayVS                                  ";
+                    gamePanel.title = "Oakmont Fenrir vs " + inputTitle + " | PlayVS                                  ";
                     break;
                 case "Rocket League":
-                    title = "Oakmont Ragnarok vs " + inputTitle + " | Varsity Rocket League                 ";
+                    gamePanel.title = "Oakmont Ragnarok vs " + inputTitle + " | Varsity Rocket League                 ";
                     break;
                 case "League of Legends":
-                    title = "Oakmont Berserkers vs " + inputTitle + " | Varsity LoL                         ";
+                    gamePanel.title = "Oakmont Berserkers vs " + inputTitle + " | Varsity LoL                         ";
                     break;
                 case "Super Smash Bros":
-                    title = inputTitle + " | Oakmont Drakkar | Varsity SSBU                                 ";
+                    gamePanel.title = inputTitle + " | Oakmont Drakkar | Varsity SSBU                                 ";
                     break;
                 case "Chess":
-                    title = inputTitle + " | Chess | Oakmont Esports                                        ";
+                    gamePanel.title = inputTitle + " | Chess | Oakmont Esports                                        ";
                     break;
 
             }
-            gamePanel.streamPreviewTitleLabel.setText(title);
+            gamePanel.updateStreamPreview();
         }
 
-        else if (e.getSource() == gamePanel.player1Dropdown) {
-//            System.out.println()
-            gamePanel.player1Dropdown.setSelectedIndex(gamePanel.player1Dropdown.getSelectedIndex());
-            gamePanel.streamPreviewPlayerSelectedLabel.setText("Roster: " + gamePanel.player1Dropdown.getSelectedItem());
+        else if (e.getSource() == gamePanel.playerDropdown) {
+            gamePanel.selectedPlayers.add(gamePanel.playerDropdown.getSelectedItem().toString());
+            gamePanel.updateStreamPreview();
+//            System.out.println(gamePanel.playerDropdown.getSelectedItem());
+//            gamePanel.playerDropdown.setSelectedIndex(gamePanel.playerDropdown.getSelectedIndex());
+//            gamePanel.streamPreviewPlayerSelectedLabel.setText("Roster: " + gamePanel.playerDropdown.getSelectedItem());
         }
+
+        // if it is any one of the JComboBoxes
+//        else if (e.getSource().getClass().getSimpleName().equals("JComboBox")){
+//            System.out.println(gamePanel.playerDropdown.getSelectedItem());
+//        }
 
         else if (e.getSource() == gamePanel.generateStreamButton) {
             gameBaseFunctionality.generateStream();
+
         }
 
+        else if (e.getSource() == gamePanel.playerDropdown)  {
 
+        }
+//        else if (e.getSource() instanceof JComboBox) {
+//            JComboBox cb = (JComboBox) e.getSource();
+//            System.out.println(cb.getSelectedItem());
+//        }
     }
 }

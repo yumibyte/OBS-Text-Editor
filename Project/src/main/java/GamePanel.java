@@ -3,6 +3,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
 
 public class GamePanel {
 
@@ -14,17 +15,16 @@ public class GamePanel {
     static JTextField streamTitleTextField = new JTextField();
     static JLabel streamTitle = new JLabel("");
 
-    static JLabel player1 = new JLabel("Player 1");
-    static JLabel player2 = new JLabel("Player 2");
-    static JLabel player3 = new JLabel("Player 3");
-
     static String[] superSmashPlayerOptions = {"Matthew Chance Lopez","Mason Harder","Jordan Hopper","Noah","Gavin Phillian"};
-    static JComboBox player1Dropdown = new JComboBox(superSmashPlayerOptions);
-
+    static JComboBox playerDropdown;
     static JButton generateStreamButton = new JButton("Generate Stream");
 
-    static JLabel streamPreviewTitleLabel = new JLabel("");
+    static JTextArea streamPreviewLabel = new JTextArea("");
     static JLabel streamPreviewPlayerSelectedLabel = new JLabel("");
+
+    // stream preview roster
+    static ArrayList<String> selectedPlayers = new ArrayList<String>();
+    static String title = "";
 
     GamePanel() {
 
@@ -66,30 +66,38 @@ public class GamePanel {
         streamTitleTextField.addActionListener(new GUI());
         mainPanel.add(streamTitleTextField);
 
-        // Player 1
-        // combobox
+        // Roster selection
+        JLabel rosterSelectionLabel = new JLabel("Roster Selection");
+        rosterSelectionLabel.setFont(new Font("Serif",Font.BOLD, 25));
+        rosterSelectionLabel.setForeground(Color.darkGray);
+        rosterSelectionLabel.setBounds(xSelection, 280, 300, 100);
+        mainPanel.add(rosterSelectionLabel);
 
-        JPanel test = new JPanel();
-        test.setBounds(50, 300, 200, 200);
-        player1.setFont(new Font("Serif",Font.BOLD, 25));
-        player1.setForeground(Color.darkGray);
-        player1.setBounds(xSelection, 280, 300, 100);
-        test.add(player1);
+        int numberOfRosterSlots = 1;
 
-        player1Dropdown.setBounds(xSelection, 340, 300, 100);
-        player1Dropdown.addActionListener(new GUI());
-        test.add(player1Dropdown);
+        // determine number of roster slots
+        switch (gameTitleType) {
+            case "Overwatch":
+                numberOfRosterSlots = 6;
+                break;
+            case "Rocket League":
+                numberOfRosterSlots = 8;
+                break;
+            case "League of Legends":
+                numberOfRosterSlots = 5;
+                break;
+        }
 
-        JScrollPane scrollPane = new JScrollPane(test);
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        playerDropdown = new JComboBox(superSmashPlayerOptions);
+        playerDropdown.setBounds(xSelection, 340, 300, 100);
+        playerDropdown.addActionListener(new GUI());
+        mainPanel.add(playerDropdown);
 
-//        scrollPane.setBounds(50, 300, 200, 200);
-
-        mainPanel.add(scrollPane);
+//        player1Dropdown.setBounds(xSelection, 340, 300, 100);
+//        player1Dropdown.addActionListener(new GUI());
+//        mainPanel.add(player1Dropdown);
 
         // generate stream
-
-//        generateStreamButton = new JButton("Generate Stream");
         generateStreamButton.setFont(new Font("Serif",Font.BOLD, 25));
         generateStreamButton.setBackground(Color.blue);
         generateStreamButton.setForeground(Color.white);
@@ -99,16 +107,16 @@ public class GamePanel {
         mainPanel.add(generateStreamButton);
 
         // PREVIEW PANEL
-        JLabel streamPreviewLabel = new JLabel("Stream Preview");
-        streamPreviewLabel.setFont(new Font("Serif",Font.BOLD, 25));
-        streamPreviewLabel.setForeground(Color.gray);
-        streamPreviewLabel.setBounds(700, 130, 300, 100);
-        mainPanel.add(streamPreviewLabel);
+        JLabel streamPreviewTitle = new JLabel("Stream Preview");
+        streamPreviewTitle.setFont(new Font("Serif",Font.BOLD, 25));
+        streamPreviewTitle.setForeground(Color.gray);
+        streamPreviewTitle.setBounds(700, 130, 300, 100);
+        mainPanel.add(streamPreviewTitle);
 
-        streamPreviewTitleLabel.setFont(new Font("Serif",Font.PLAIN, 15));
-        streamPreviewTitleLabel.setForeground(Color.gray);
-        streamPreviewTitleLabel.setBounds(700, 180, 500, 100);
-        mainPanel.add(streamPreviewTitleLabel);
+        streamPreviewLabel.setFont(new Font("Serif",Font.PLAIN, 15));
+        streamPreviewLabel.setForeground(Color.gray);
+        streamPreviewLabel.setBounds(700, 220, 500, 100);
+        mainPanel.add(streamPreviewLabel);
 
         streamPreviewPlayerSelectedLabel.setFont(new Font("Serif",Font.PLAIN, 15));
         streamPreviewPlayerSelectedLabel.setForeground(Color.gray);
@@ -126,6 +134,23 @@ public class GamePanel {
 
     public JPanel retrievePanel() {
         return mainPanel;
+    }
+
+    public void updateStreamPreview() {
+
+        String streamPreviewString = "";
+
+        streamPreviewString += title + "\n";
+
+        for (String player: selectedPlayers) {
+            streamPreviewString += player + "\n";
+        }
+
+
+        System.out.println(streamPreviewString);
+        streamPreviewLabel.setText(streamPreviewString);
+
+
     }
 
 
