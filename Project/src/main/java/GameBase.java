@@ -5,6 +5,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class GameBase {
 
@@ -51,6 +52,11 @@ public class GameBase {
             availablePlayerTypes.clear();
             availablePlayers.clear();
 
+            for (String[] player: rosterData) {
+                availablePlayers.add(player[0]);
+            }
+            availablePlayers.remove(0);
+
             switch (gameType) {
                 case "LoL (Berserkers)":
                     availablePlayerTypes.add("Assassin");
@@ -71,15 +77,18 @@ public class GameBase {
             // Filter by player types
             if (filteringType.contains("Team Assignment")) {
 
-                // determine available players
                 for (int i = 0; i < rosterData.size(); i ++) {
-                    if (rosterData.get(i)[3].equals(gameType)) {
-                        availablePlayers.add(rosterData.get(i)[0]);
-                        System.out.println("added players");
+                    if (!rosterData.get(i)[3].equals(gameType)) {
+                        if (availablePlayers.contains(rosterData.get(i)[0])) {
+                            availablePlayers.remove(rosterData.get(i)[0]);
+                        }
                     }
                 }
-                System.out.println("team assignment");
+            }
 
+            // Filter alphabetically
+            if (filteringType.contains("Alphabetically")) {
+                Collections.sort(availablePlayers);
             }
 
             // refresh comboboxes

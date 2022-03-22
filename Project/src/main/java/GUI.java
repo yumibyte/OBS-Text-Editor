@@ -158,7 +158,7 @@ public class GUI implements ActionListener {
 
         else if (e.getSource() == gamePanel.filterButton) {
             // prompt for type of filtering
-            String[] filterOptions = {"Alphabetically", "Sport Type", "Team Assignment"};
+            String[] filterOptions = {"Alphabetically", "Team Assignment"};
             JList list = new JList(filterOptions);
             list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             JOptionPane.showMessageDialog(null, new JScrollPane(list), "Filtering Options", JOptionPane.QUESTION_MESSAGE, gamePanel.filterIcon);
