@@ -141,5 +141,12 @@ public class GUI implements ActionListener {
             gamePanel.selectedPlayerTypes.add(gamePanel.playerTypeDropdown.getSelectedItem().toString());
             gamePanel.updateStreamPreview();
         }
+
+        else if (e.getSource() == gamePanel.clearRosterButton) {
+            gamePanel.selectedPlayerTypes.clear();
+            gamePanel.selectedPlayers.clear();
+            gamePanel.updateStreamPreview();
+
+        }
     }
 }

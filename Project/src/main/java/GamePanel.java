@@ -9,24 +9,31 @@ public class GamePanel {
 
     static JPanel mainPanel = new JPanel();
     static int xSelection = 50;
+
+    // title/headers
     static String gameTitleType = "";
     static JLabel gameTitleLabel = new JLabel("");
     static JButton backButton = new JButton("Back");;
     static JTextField streamTitleTextField = new JTextField();
     static JLabel streamTitle = new JLabel("");
 
+    // roster
     static String[] superSmashPlayerOptions = {"Matthew Chance Lopez","Mason Harder","Jordan Hopper","Noah","Gavin Phillian"};
     static JComboBox playerDropdown;
     static JComboBox playerTypeDropdown;
-    static JButton generateStreamButton = new JButton("Generate Stream");
+    static JButton clearRosterButton;
 
+    // stream preview
     static JTextArea streamPreviewLabel = new JTextArea("");
     static JLabel streamPreviewPlayerSelectedLabel = new JLabel("");
-
     // stream preview roster
+
     static ArrayList<String> selectedPlayers = new ArrayList<String>();
     static ArrayList<String> selectedPlayerTypes = new ArrayList<String>();
     static String title = "";
+
+    // generate stream
+    static JButton generateStreamButton = new JButton("Generate Stream");
 
     GamePanel() {
 
@@ -81,7 +88,7 @@ public class GamePanel {
         rosterSelectionPlayerTypeLabel.setForeground(Color.darkGray);
         rosterSelectionPlayerTypeLabel.setBounds(xSelection + 5, 335, 300, 100);
         mainPanel.add(rosterSelectionPlayerTypeLabel);
-        
+
         playerTypeDropdown = new JComboBox(superSmashPlayerOptions);
         playerTypeDropdown.setBounds(xSelection - 5, 370, 300, 100);
         playerTypeDropdown.addActionListener(new GUI());
@@ -98,16 +105,17 @@ public class GamePanel {
         playerDropdown.addActionListener(new GUI());
         mainPanel.add(playerDropdown);
 
-
-
-
+        clearRosterButton = new JButton("Clear Roster");
+        clearRosterButton.setBounds(xSelection - 5, 515, 100, 40);
+        clearRosterButton.addActionListener(new GUI());
+        mainPanel.add(clearRosterButton);
 
         // generate stream
         generateStreamButton.setFont(new Font("Serif",Font.BOLD, 25));
         generateStreamButton.setBackground(Color.blue);
         generateStreamButton.setForeground(Color.white);
         generateStreamButton.setOpaque(true);
-        generateStreamButton.setBounds(500, 500, 300, 100);
+        generateStreamButton.setBounds(500, 600, 300, 100);
         generateStreamButton.addActionListener(new GUI());
         mainPanel.add(generateStreamButton);
 
@@ -120,7 +128,7 @@ public class GamePanel {
 
         streamPreviewLabel.setFont(new Font("Serif",Font.PLAIN, 15));
         streamPreviewLabel.setForeground(Color.gray);
-        streamPreviewLabel.setBounds(700, 220, 500, 100);
+        streamPreviewLabel.setBounds(700, 220, 500, 350);
         mainPanel.add(streamPreviewLabel);
 
         streamPreviewPlayerSelectedLabel.setFont(new Font("Serif",Font.PLAIN, 15));
@@ -129,7 +137,7 @@ public class GamePanel {
         mainPanel.add(streamPreviewPlayerSelectedLabel);
 
         JSeparator separatorPreview = new JSeparator();
-        separatorPreview.setBounds(650, 150, 1, 300);
+        separatorPreview.setBounds(650, 150, 1, 425);
         Border borderSeparatorPreview = BorderFactory.createLineBorder(Color.BLACK, 5);
         separatorPreview.setBorder(borderSeparatorPreview);
         separatorPreview.setOrientation(SwingConstants.VERTICAL);
