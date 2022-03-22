@@ -3,11 +3,15 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GUI implements ActionListener {
-    static GamePanel gamePanel = new GamePanel();
     static GameSelectionPanel gameSelectionPanel = new GameSelectionPanel();
+
+    static GamePanel gamePanel = new GamePanel();
     static GameBase.GameBaseFunctionality gameBaseFunctionality = new GameBase.GameBaseFunctionality();
+
     static JFrame frame = new JFrame("Esports OBS Editor");
     static JPanel mainPanel = new JPanel();
 
@@ -26,8 +30,14 @@ public class GUI implements ActionListener {
 
     public void swapToGamePanel() {
         // swap panels
-
+        gamePanel.retrievePanel().removeAll();
+        gamePanel = new GamePanel();
         mainPanel = gamePanel.retrievePanel();
+
+        ArrayList<String> noFilter = new ArrayList<String>();
+        noFilter.add("None");
+        gameBaseFunctionality.determineAvailablePlayers(noFilter);
+
 
         // TODO create scroll pane
 
@@ -47,7 +57,7 @@ public class GUI implements ActionListener {
             //set initial values for gametype
             gameBaseFunctionality.numberOfPlayers = 6;
             gamePanel.gameTitleLabel.setText("Overwatch");
-            gameBaseFunctionality.gameType = "Overwatch";
+            gameBaseFunctionality.gameType = "OW (Fenrir)";
             gamePanel.streamTitle.setText("Opposing Team Name");
             swapToGamePanel();
 
@@ -58,7 +68,7 @@ public class GUI implements ActionListener {
             //set initial values for gametype
             gameBaseFunctionality.numberOfPlayers = 8;
             gamePanel.gameTitleLabel.setText("Rocket League");
-            gameBaseFunctionality.gameType = "Rocket League";
+            gameBaseFunctionality.gameType = "RL (Ragnarok)";
             gamePanel.streamTitle.setText("Opposing Team Name");
 
             swapToGamePanel();
@@ -68,7 +78,7 @@ public class GUI implements ActionListener {
             //set initial values for gametype
             gameBaseFunctionality.numberOfPlayers = 1;
             gamePanel.gameTitleLabel.setText("Super Smash Bros");
-            gameBaseFunctionality.gameType = "Super Smash Bros";
+            gameBaseFunctionality.gameType = "SSBU (Drakkar)";
             gamePanel.streamTitle.setText("Player Name");
 
             swapToGamePanel();
@@ -78,7 +88,7 @@ public class GUI implements ActionListener {
             //set initial values for gametype
             gameBaseFunctionality.numberOfPlayers = 5;
             gamePanel.gameTitleLabel.setText("League of Legends");
-            gameBaseFunctionality.gameType = "League of Legends";
+            gameBaseFunctionality.gameType = "LoL (Berserkers)";
             gamePanel.streamTitle.setText("Opposing Team Name");
 
             swapToGamePanel();
@@ -95,8 +105,6 @@ public class GUI implements ActionListener {
         }
 
         else if (e.getSource() == gamePanel.backButton) {
-
-            System.out.println("back");
             frame.setContentPane(gameSelectionPanel.retrievePanel());
             frame.revalidate();
             frame.repaint();
@@ -107,16 +115,16 @@ public class GUI implements ActionListener {
             String inputTitle = gamePanel.streamTitleTextField.getText();
 
             switch (gameBaseFunctionality.gameType) {
-                case "Overwatch":
+                case "OW (Fenrir)":
                     gamePanel.title = "Oakmont Fenrir vs " + inputTitle + " | PlayVS                                  ";
                     break;
-                case "Rocket League":
+                case "RL (Ragnarok)":
                     gamePanel.title = "Oakmont Ragnarok vs " + inputTitle + " | Varsity Rocket League                 ";
                     break;
-                case "League of Legends":
+                case "LoL (Berserkers)":
                     gamePanel.title = "Oakmont Berserkers vs " + inputTitle + " | Varsity LoL                         ";
                     break;
-                case "Super Smash Bros":
+                case "SSBU (Drakkar)":
                     gamePanel.title = inputTitle + " | Oakmont Drakkar | Varsity SSBU                                 ";
                     break;
                 case "Chess":
@@ -140,6 +148,27 @@ public class GUI implements ActionListener {
         else if (e.getSource() == gamePanel.playerTypeDropdown)  {
             gamePanel.selectedPlayerTypes.add(gamePanel.playerTypeDropdown.getSelectedItem().toString());
             gamePanel.updateStreamPreview();
+        }
+
+        else if (e.getSource() == gamePanel.clearRosterButton) {
+            gamePanel.selectedPlayerTypes.clear();
+            gamePanel.selectedPlayers.clear();
+            gamePanel.updateStreamPreview();
+        }
+
+        else if (e.getSource() == gamePanel.filterButton) {
+            // prompt for type of filtering
+            String[] filterOptions = {"Alphabetically", "Team Assignment"};
+            JList list = new JList(filterOptions);
+            list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            JOptionPane.showMessageDialog(null, new JScrollPane(list), "Filtering Options", JOptionPane.QUESTION_MESSAGE, gamePanel.filterIcon);
+            ArrayList<String> selectedFilters = new ArrayList<String>();
+
+            for (Object value: list.getSelectedValues()) {
+                selectedFilters.add(value.toString());
+            }
+
+            gameBaseFunctionality.determineAvailablePlayers(selectedFilters);
         }
     }
 }

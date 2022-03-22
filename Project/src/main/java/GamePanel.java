@@ -9,24 +9,31 @@ public class GamePanel {
 
     static JPanel mainPanel = new JPanel();
     static int xSelection = 50;
+
+    // title/headers
     static String gameTitleType = "";
     static JLabel gameTitleLabel = new JLabel("");
     static JButton backButton = new JButton("Back");;
     static JTextField streamTitleTextField = new JTextField();
     static JLabel streamTitle = new JLabel("");
 
-    static String[] superSmashPlayerOptions = {"Matthew Chance Lopez","Mason Harder","Jordan Hopper","Noah","Gavin Phillian"};
+    // roster
     static JComboBox playerDropdown;
     static JComboBox playerTypeDropdown;
-    static JButton generateStreamButton = new JButton("Generate Stream");
+    static JButton clearRosterButton;
+    static JButton filterButton;
+    static ImageIcon filterIcon;
 
+    // stream preview
     static JTextArea streamPreviewLabel = new JTextArea("");
     static JLabel streamPreviewPlayerSelectedLabel = new JLabel("");
-
     // stream preview roster
     static ArrayList<String> selectedPlayers = new ArrayList<String>();
     static ArrayList<String> selectedPlayerTypes = new ArrayList<String>();
     static String title = "";
+
+    // generate stream
+    static JButton generateStreamButton = new JButton("Generate Stream");
 
     GamePanel() {
 
@@ -50,15 +57,14 @@ public class GamePanel {
         separator.setOrientation(SwingConstants.HORIZONTAL);
         mainPanel.add(separator);
 
+        // top right label
         gameTitleLabel.setFont(new Font("Serif",Font.BOLD, 30));
         gameTitleLabel.setForeground(Color.gray);
         gameTitleLabel.setBounds(900, 50, 300, 100);
         mainPanel.add(gameTitleLabel);
 
         // CONTENTS
-
-        // stream title
-        streamTitle.setText(gameTitleType);
+        // topmost label above title input
         streamTitle.setFont(new Font("Serif",Font.BOLD, 25));
         streamTitle.setForeground(Color.darkGray);
         streamTitle.setBounds(xSelection, 130, 300, 100);
@@ -76,38 +82,70 @@ public class GamePanel {
         mainPanel.add(rosterSelectionLabel);
 
         // roster selection
-        JLabel rosterSelectionPlayerTypeLabel = new JLabel("Player type");
-        rosterSelectionPlayerTypeLabel.setFont(new Font("Serif", Font.PLAIN, 15));
-        rosterSelectionPlayerTypeLabel.setForeground(Color.darkGray);
-        rosterSelectionPlayerTypeLabel.setBounds(xSelection + 5, 335, 300, 100);
-        mainPanel.add(rosterSelectionPlayerTypeLabel);
-        
-        playerTypeDropdown = new JComboBox(superSmashPlayerOptions);
-        playerTypeDropdown.setBounds(xSelection - 5, 370, 300, 100);
-        playerTypeDropdown.addActionListener(new GUI());
-        mainPanel.add(playerTypeDropdown);
+        int yRosterLabel = 405;
+        int yRosterLabelDropdown = 470;
+        int yFilter = 435;
+        int yClearRoster = 515;
+        if (GUI.gameBaseFunctionality.gameType.equals("SSBU (Drakkar)") ||
+                GUI.gameBaseFunctionality.gameType.equals("RL (Ragnarok)") ||
+                GUI.gameBaseFunctionality.gameType.equals("Chess")) {
+
+            // no playerType will be created. Shift player name selection upwards
+            yRosterLabel = 335;
+            yRosterLabelDropdown = 400;
+            yFilter = 360;
+            yClearRoster = 450;
+
+        } else {
+
+            // OW and LoL require playerTypes
+            JLabel rosterSelectionPlayerTypeLabel = new JLabel("Player type");
+            rosterSelectionPlayerTypeLabel.setFont(new Font("Serif", Font.PLAIN, 15));
+            rosterSelectionPlayerTypeLabel.setForeground(Color.darkGray);
+            rosterSelectionPlayerTypeLabel.setBounds(xSelection + 5, 335, 300, 100);
+            mainPanel.add(rosterSelectionPlayerTypeLabel);
+
+            playerTypeDropdown = new JComboBox(GUI.gameBaseFunctionality.availablePlayerTypes.toArray());
+            playerTypeDropdown.setBounds(xSelection - 5, 400, 300, 40);
+            playerTypeDropdown.addActionListener(new GUI());
+            mainPanel.add(playerTypeDropdown);
+
+
+        }
+
 
         JLabel rosterSelectionPlayerNameLabel = new JLabel("Player name");
         rosterSelectionPlayerNameLabel.setFont(new Font("Serif",Font.PLAIN, 15));
         rosterSelectionPlayerNameLabel.setForeground(Color.darkGray);
-        rosterSelectionPlayerNameLabel.setBounds(xSelection + 5, 405, 300, 100);
+        rosterSelectionPlayerNameLabel.setBounds(xSelection + 5, yRosterLabel, 300, 100);
         mainPanel.add(rosterSelectionPlayerNameLabel);
 
-        playerDropdown = new JComboBox(superSmashPlayerOptions);
-        playerDropdown.setBounds(xSelection - 5, 440, 300, 100);
+        playerDropdown = new JComboBox(GUI.gameBaseFunctionality.availablePlayers.toArray());
+        playerDropdown.setBounds(xSelection - 5, yRosterLabelDropdown, 300, 40);
         playerDropdown.addActionListener(new GUI());
         mainPanel.add(playerDropdown);
 
+//        ImageIcon icon = new ImageIcon("src/main/java/filterSymbol.png");
+        filterIcon = new ImageIcon(new ImageIcon("src/main/java/filterSymbol.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
 
+        filterButton = new JButton(filterIcon);
+        filterButton.setFont(new Font("Serif",Font.PLAIN, 15));
+        filterButton.setForeground(Color.darkGray);
+        filterButton.setBounds(xSelection + 250, yFilter, 40, 40);
+        filterButton.addActionListener(new GUI());
+        mainPanel.add(filterButton);
 
-
+        clearRosterButton = new JButton("Clear Roster");
+        clearRosterButton.setBounds(xSelection - 5, yClearRoster, 100, 40);
+        clearRosterButton.addActionListener(new GUI());
+        mainPanel.add(clearRosterButton);
 
         // generate stream
         generateStreamButton.setFont(new Font("Serif",Font.BOLD, 25));
         generateStreamButton.setBackground(Color.blue);
         generateStreamButton.setForeground(Color.white);
         generateStreamButton.setOpaque(true);
-        generateStreamButton.setBounds(500, 500, 300, 100);
+        generateStreamButton.setBounds(500, 600, 300, 100);
         generateStreamButton.addActionListener(new GUI());
         mainPanel.add(generateStreamButton);
 
@@ -120,7 +158,7 @@ public class GamePanel {
 
         streamPreviewLabel.setFont(new Font("Serif",Font.PLAIN, 15));
         streamPreviewLabel.setForeground(Color.gray);
-        streamPreviewLabel.setBounds(700, 220, 500, 100);
+        streamPreviewLabel.setBounds(700, 220, 500, 350);
         mainPanel.add(streamPreviewLabel);
 
         streamPreviewPlayerSelectedLabel.setFont(new Font("Serif",Font.PLAIN, 15));
@@ -129,7 +167,7 @@ public class GamePanel {
         mainPanel.add(streamPreviewPlayerSelectedLabel);
 
         JSeparator separatorPreview = new JSeparator();
-        separatorPreview.setBounds(650, 150, 1, 300);
+        separatorPreview.setBounds(650, 150, 1, 425);
         Border borderSeparatorPreview = BorderFactory.createLineBorder(Color.BLACK, 5);
         separatorPreview.setBorder(borderSeparatorPreview);
         separatorPreview.setOrientation(SwingConstants.VERTICAL);
@@ -145,6 +183,7 @@ public class GamePanel {
 
         String streamPreviewString = "";
 
+        System.out.println(title);
         streamPreviewString += title + "\n\n" +
                 "Roster: \n";
 
@@ -157,9 +196,6 @@ public class GamePanel {
             }
         }
 
-
-
-        System.out.println(streamPreviewString);
         streamPreviewLabel.setText(streamPreviewString);
 
 
