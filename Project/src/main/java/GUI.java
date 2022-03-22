@@ -7,10 +7,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GUI implements ActionListener {
+    static GameSelectionPanel gameSelectionPanel = new GameSelectionPanel();
+
     static GamePanel gamePanel = new GamePanel();
     static GameBase.GameBaseFunctionality gameBaseFunctionality = new GameBase.GameBaseFunctionality();
 
-    static GameSelectionPanel gameSelectionPanel = new GameSelectionPanel();
     static JFrame frame = new JFrame("Esports OBS Editor");
     static JPanel mainPanel = new JPanel();
 
@@ -29,6 +30,8 @@ public class GUI implements ActionListener {
 
     public void swapToGamePanel() {
         // swap panels
+        gamePanel.retrievePanel().removeAll();
+        gamePanel = new GamePanel();
         mainPanel = gamePanel.retrievePanel();
 
         ArrayList<String> noFilter = new ArrayList<String>();
@@ -164,7 +167,7 @@ public class GUI implements ActionListener {
             for (Object value: list.getSelectedValues()) {
                 selectedFilters.add(value.toString());
             }
-            
+
             gameBaseFunctionality.determineAvailablePlayers(selectedFilters);
         }
     }

@@ -51,24 +51,25 @@ public class GameBase {
             availablePlayerTypes.clear();
             availablePlayers.clear();
 
+            switch (gameType) {
+                case "LoL (Berserkers)":
+                    availablePlayerTypes.add("Assassin");
+                    availablePlayerTypes.add("Fighter");
+                    availablePlayerTypes.add("Mage");
+                    availablePlayerTypes.add("Marksman");
+                    availablePlayerTypes.add("Support");
+                    availablePlayerTypes.add("Tank");
+                    break;
+                case "OW (Fenrir)":
+                    availablePlayerTypes.add("Offense");
+                    availablePlayerTypes.add("Defense");
+                    availablePlayerTypes.add("Support");
+                    availablePlayerTypes.add("Tank");
+                    break;
+            }
+
             // Filter by player types
             if (filteringType.contains("Team Assignment")) {
-                switch (gameType) {
-                    case "LoL (Berserkers)":
-                        availablePlayerTypes.add("Assassin");
-                        availablePlayerTypes.add("Fighter");
-                        availablePlayerTypes.add("Mage");
-                        availablePlayerTypes.add("Marksman");
-                        availablePlayerTypes.add("Support");
-                        availablePlayerTypes.add("Tank");
-                        break;
-                    case "OW (Fenrir)":
-                        availablePlayerTypes.add("Offense");
-                        availablePlayerTypes.add("Defense");
-                        availablePlayerTypes.add("Support");
-                        availablePlayerTypes.add("Tank");
-                        break;
-                }
 
                 // determine available players
                 for (int i = 0; i < rosterData.size(); i ++) {

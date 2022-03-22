@@ -57,15 +57,14 @@ public class GamePanel {
         separator.setOrientation(SwingConstants.HORIZONTAL);
         mainPanel.add(separator);
 
+        // top right label
         gameTitleLabel.setFont(new Font("Serif",Font.BOLD, 30));
         gameTitleLabel.setForeground(Color.gray);
         gameTitleLabel.setBounds(900, 50, 300, 100);
         mainPanel.add(gameTitleLabel);
 
         // CONTENTS
-
-        // stream title
-        streamTitle.setText(gameTitleType);
+        // topmost label above title input
         streamTitle.setFont(new Font("Serif",Font.BOLD, 25));
         streamTitle.setForeground(Color.darkGray);
         streamTitle.setBounds(xSelection, 130, 300, 100);
@@ -83,22 +82,48 @@ public class GamePanel {
         mainPanel.add(rosterSelectionLabel);
 
         // roster selection
-        JLabel rosterSelectionPlayerTypeLabel = new JLabel("Player type");
-        rosterSelectionPlayerTypeLabel.setFont(new Font("Serif", Font.PLAIN, 15));
-        rosterSelectionPlayerTypeLabel.setForeground(Color.darkGray);
-        rosterSelectionPlayerTypeLabel.setBounds(xSelection + 5, 335, 300, 100);
-        mainPanel.add(rosterSelectionPlayerTypeLabel);
+        int yRosterLabel = 405;
+        int yRosterLabelDropdown = 470;
+        int yFilter = 435;
+        int yClearRoster = 515;
+        if (GUI.gameBaseFunctionality.gameType.equals("SSBU (Drakkar)") ||
+                GUI.gameBaseFunctionality.gameType.equals("RL (Ragnarok)") ||
+                GUI.gameBaseFunctionality.gameType.equals("Chess")) {
 
-        playerTypeDropdown = new JComboBox(GUI.gameBaseFunctionality.availablePlayerTypes.toArray());
-        playerTypeDropdown.setBounds(xSelection - 5, 400, 300, 40);
-        playerTypeDropdown.addActionListener(new GUI());
-        mainPanel.add(playerTypeDropdown);
+            // no playerType will be created. Shift player name selection upwards
+            yRosterLabel = 335;
+            yRosterLabelDropdown = 400;
+            yFilter = 360;
+            yClearRoster = 450;
+
+        } else {
+
+            // OW and LoL require playerTypes
+            JLabel rosterSelectionPlayerTypeLabel = new JLabel("Player type");
+            rosterSelectionPlayerTypeLabel.setFont(new Font("Serif", Font.PLAIN, 15));
+            rosterSelectionPlayerTypeLabel.setForeground(Color.darkGray);
+            rosterSelectionPlayerTypeLabel.setBounds(xSelection + 5, 335, 300, 100);
+            mainPanel.add(rosterSelectionPlayerTypeLabel);
+
+            playerTypeDropdown = new JComboBox(GUI.gameBaseFunctionality.availablePlayerTypes.toArray());
+            playerTypeDropdown.setBounds(xSelection - 5, 400, 300, 40);
+            playerTypeDropdown.addActionListener(new GUI());
+            mainPanel.add(playerTypeDropdown);
+
+
+        }
+
 
         JLabel rosterSelectionPlayerNameLabel = new JLabel("Player name");
         rosterSelectionPlayerNameLabel.setFont(new Font("Serif",Font.PLAIN, 15));
         rosterSelectionPlayerNameLabel.setForeground(Color.darkGray);
-        rosterSelectionPlayerNameLabel.setBounds(xSelection + 5, 405, 300, 100);
+        rosterSelectionPlayerNameLabel.setBounds(xSelection + 5, yRosterLabel, 300, 100);
         mainPanel.add(rosterSelectionPlayerNameLabel);
+
+        playerDropdown = new JComboBox(GUI.gameBaseFunctionality.availablePlayers.toArray());
+        playerDropdown.setBounds(xSelection - 5, yRosterLabelDropdown, 300, 40);
+        playerDropdown.addActionListener(new GUI());
+        mainPanel.add(playerDropdown);
 
 //        ImageIcon icon = new ImageIcon("src/main/java/filterSymbol.png");
         filterIcon = new ImageIcon(new ImageIcon("src/main/java/filterSymbol.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
@@ -106,17 +131,12 @@ public class GamePanel {
         filterButton = new JButton(filterIcon);
         filterButton.setFont(new Font("Serif",Font.PLAIN, 15));
         filterButton.setForeground(Color.darkGray);
-        filterButton.setBounds(xSelection + 250, 435, 40, 40);
+        filterButton.setBounds(xSelection + 250, yFilter, 40, 40);
         filterButton.addActionListener(new GUI());
         mainPanel.add(filterButton);
 
-        playerDropdown = new JComboBox(GUI.gameBaseFunctionality.availablePlayers.toArray());
-        playerDropdown.setBounds(xSelection - 5, 470, 300, 40);
-        playerDropdown.addActionListener(new GUI());
-        mainPanel.add(playerDropdown);
-
         clearRosterButton = new JButton("Clear Roster");
-        clearRosterButton.setBounds(xSelection - 5, 515, 100, 40);
+        clearRosterButton.setBounds(xSelection - 5, yClearRoster, 100, 40);
         clearRosterButton.addActionListener(new GUI());
         mainPanel.add(clearRosterButton);
 
