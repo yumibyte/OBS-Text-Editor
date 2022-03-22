@@ -130,27 +130,16 @@ public class GUI implements ActionListener {
         else if (e.getSource() == gamePanel.playerDropdown) {
             gamePanel.selectedPlayers.add(gamePanel.playerDropdown.getSelectedItem().toString());
             gamePanel.updateStreamPreview();
-//            System.out.println(gamePanel.playerDropdown.getSelectedItem());
-//            gamePanel.playerDropdown.setSelectedIndex(gamePanel.playerDropdown.getSelectedIndex());
-//            gamePanel.streamPreviewPlayerSelectedLabel.setText("Roster: " + gamePanel.playerDropdown.getSelectedItem());
         }
-
-        // if it is any one of the JComboBoxes
-//        else if (e.getSource().getClass().getSimpleName().equals("JComboBox")){
-//            System.out.println(gamePanel.playerDropdown.getSelectedItem());
-//        }
 
         else if (e.getSource() == gamePanel.generateStreamButton) {
             gameBaseFunctionality.generateStream();
 
         }
 
-        else if (e.getSource() == gamePanel.playerDropdown)  {
-
+        else if (e.getSource() == gamePanel.playerTypeDropdown)  {
+            gamePanel.selectedPlayerTypes.add(gamePanel.playerTypeDropdown.getSelectedItem().toString());
+            gamePanel.updateStreamPreview();
         }
-//        else if (e.getSource() instanceof JComboBox) {
-//            JComboBox cb = (JComboBox) e.getSource();
-//            System.out.println(cb.getSelectedItem());
-//        }
     }
 }
