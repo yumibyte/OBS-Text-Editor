@@ -26,6 +26,7 @@ public class GameBase {
 
         // read roster and initialize variables
         public void readRoster() {
+//            File rosterFile = new File(filePathLocation);
             File rosterFile = new File("src/main/java/Main Roster Database - Tracker.tsv");
 
             try (BufferedReader TSVReader = new BufferedReader(new FileReader(rosterFile))) {

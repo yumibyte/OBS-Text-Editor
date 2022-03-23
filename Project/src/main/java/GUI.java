@@ -17,7 +17,7 @@ public class GUI implements ActionListener {
 
     public static void main(String[] args) {
 
-        frame.setSize(1300, 800);
+        frame.setSize(1320, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
@@ -30,8 +30,31 @@ public class GUI implements ActionListener {
 
     public void swapToGamePanel() {
         // swap panels
-        gamePanel.retrievePanel().removeAll();
-        gamePanel = new GamePanel();
+//        gamePanel.retrievePanel().removeAll();
+//        gamePanel = new GamePanel();
+
+        if (gameBaseFunctionality.gameType.equals("SSBU (Drakkar)") ||
+                gameBaseFunctionality.gameType.equals("RL (Ragnarok)") ||
+                gameBaseFunctionality.gameType.equals("Chess")) {
+            System.out.println(gameBaseFunctionality.gameType.toString());
+//            // no playerType will be created. Shift player name selection upwards
+//            yRosterLabel = 335;
+//            yRosterLabelDropdown = 400;
+//            yFilter = 360;
+//            yClearRoster = 450;
+            System.out.println("true");
+            gamePanel.rosterSelectionPlayerTypeLabel.setVisible(false);
+            gamePanel.playerTypeDropdown.setVisible(false);
+
+        } else {
+            System.out.println("false");
+
+            gamePanel.rosterSelectionPlayerTypeLabel.setVisible(true);
+            gamePanel.playerTypeDropdown.setVisible(true);
+
+
+        }
+
         mainPanel = gamePanel.retrievePanel();
 
         ArrayList<String> noFilter = new ArrayList<String>();
