@@ -103,7 +103,7 @@ public class GUI implements ActionListener {
         else if (e.getSource() == gameSelectionPanel.rocketLeagueButton) {
 
             //set initial values for gametype
-            gameBaseFunctionality.numberOfPlayers = 5;
+            gameBaseFunctionality.numberOfPlayers = 8;
             gamePanel.gameTitleLabel.setText("Rocket League");
             gameBaseFunctionality.gameType = "RL (Ragnarok)";
             gamePanel.streamTitle.setText("Opposing Team Name");

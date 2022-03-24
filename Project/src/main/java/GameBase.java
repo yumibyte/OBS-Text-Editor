@@ -28,7 +28,9 @@ public class GameBase {
         public static ArrayList<String> availablePlayerTypes = new ArrayList<String>();
 
         public static ArrayList<String[]> rosterData = new ArrayList<>();
+        public static Map<String, String> mobalyticsData = new HashMap<String, String>();
 
+        public static String fileName = "C:\\Users\\ashra\\AppData\\Roaming\\obs-studio\\basic\\scenes\\Esports2021.json";
         // ensure gameBase is initialized with roster data
         { readRoster(); }
 
@@ -67,12 +69,11 @@ public class GameBase {
 
             switch (gameType) {
                 case "LoL (Berserkers)":
-                    availablePlayerTypes.add("Assassin");
-                    availablePlayerTypes.add("Fighter");
-                    availablePlayerTypes.add("Mage");
-                    availablePlayerTypes.add("Marksman");
+                    availablePlayerTypes.add("Top");
+                    availablePlayerTypes.add("Jungle");
+                    availablePlayerTypes.add("Mid");
+                    availablePlayerTypes.add("ADC");
                     availablePlayerTypes.add("Support");
-                    availablePlayerTypes.add("Tank");
                     break;
                 case "OW (Fenrir)":
                     availablePlayerTypes.add("Offense");
@@ -111,42 +112,204 @@ public class GameBase {
 
         public void generateStream() throws IOException {
 
-            // determine title based on game type
+            // Retrieve JSON file if we don't know the path
+
+            updateOBSTitle();
+            updateRoster();
+
+            if (gameType.equals("LoL (Berserkers)")) {
+                updateMobalytics();
+            }
+
             System.out.println("generated stream!");
 
+
+        }
+
+        public void updateMobalytics() throws IOException {
+
+            // create list of Mobalytics data
+            try (InputStream inputStream = getClass().getResourceAsStream("/MobalyticsRoster - Sheet1.tsv");
+                 BufferedReader TSVReader = new BufferedReader(new InputStreamReader(inputStream))) {
+
+                String line = "";
+                while ((line = TSVReader.readLine()) != null) {
+                    String[] lineItems = line.split("\t"); //splitting the line and adding its items in String[]
+                    mobalyticsData.put(lineItems[0], lineItems[4]); //adding the splitted line array to the ArrayList
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            ArrayList<Integer> availableMobalyticsSlots = new ArrayList<Integer>();
+            availableMobalyticsSlots.add(6);        // top laner
+            availableMobalyticsSlots.add(4);        // mid laner
+            availableMobalyticsSlots.add(83);       // ADC
+            availableMobalyticsSlots.add(5);        // jungle
+            availableMobalyticsSlots.add(84);       // support
+
+            // Update OBS
+            ObjectMapper mapper = new ObjectMapper();
+
+            Map<String, ArrayList<LinkedHashMap<String, LinkedHashMap<String, String>>>> map = mapper.readValue(Paths.get(fileName).toFile(), Map.class);
+            ArrayList<LinkedHashMap<String, LinkedHashMap<String, String>>> sources = map.get("sources");
+
+
+            // 5 players in LoL
+//            for (int i = 0; i < 5; i++) {
+
+            for (String player : GUI.gamePanel.selectedPlayers) {
+
+                if (mobalyticsData.containsKey(player)) {
+
+                    switch (GUI.gamePanel.finalRoster.get(player)) {
+                        case "Top":
+                            sources.get(6).get("settings").put("url", mobalyticsData.get(player));
+                            map.put("sources", sources);
+                            break;
+                        case "Mid":
+                            sources.get(4).get("settings").put("url", mobalyticsData.get(player));
+                            map.put("sources", sources);
+                            break;
+                        case "Support":
+                            sources.get(84).get("settings").put("url", mobalyticsData.get(player));
+                            map.put("sources", sources);
+                            break;
+                        case "ADC":
+                            sources.get(83).get("settings").put("url", mobalyticsData.get(player));
+                            map.put("sources", sources);
+                            break;
+                        case "Jungle":
+                            sources.get(5).get("settings").put("url", mobalyticsData.get(player));
+                            map.put("sources", sources);
+                            break;
+                    }
+
+
+                }
+//                }
+            }
+            JSONObject jo = new JSONObject(map);
+
+            try (FileWriter file = new FileWriter(fileName))
+            {
+                file.write(jo.toString());
+                System.out.println("Successfully updated json object to file...!!");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void updateRoster() throws IOException {
+            // UPDATE OBS
             // create object mapper instance
+
+            // choose file
+//            JFileChooser jfc = new JFileChooser();
+//            fileName = jfc.getSelectedFile().getAbsolutePath();
 
             ObjectMapper mapper = new ObjectMapper();
 
-            // convert JSON file to map
-            String contents = "";
-            try (InputStream inputStream = getClass().getResourceAsStream("/EsportsTest.json")) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                contents = reader.lines().collect(Collectors.joining(System.lineSeparator()));
-            }
-            Map<String, ArrayList<LinkedHashMap<String, LinkedHashMap<String, String>>>> map = mapper.readValue(contents, Map.class);
+            Map<String, ArrayList<LinkedHashMap<String, LinkedHashMap<String, String>>>> map = mapper.readValue(Paths.get(fileName).toFile(), Map.class);
             ArrayList<LinkedHashMap<String, LinkedHashMap<String, String>>> sources = map.get("sources");
 
             // change text to new text
-            sources.get(1).get("settings").put("monitor", "4");
+
+            // increment y for each player on the roster
+//            if (gameType.equals("RL (Ragnarok)")) {
+//                int y = 0;
+//                for (int x = 96; x > 91; x --) {
+//                    sources.get(x).get("settings").put("text", GUI.gamePanel.finalRoster.get(y));
+//                    y ++;
+//
+//                    map.put("sources", sources);
+//                }
+//            }
+
+            if (gameType.equals("OW (Fenrir)") || gameType.equals("RL (Ragnarok)")) {
+
+                // locations of roster text fields
+                ArrayList<Integer> rosterTextNumbers = new ArrayList<Integer>();
+                rosterTextNumbers.add(93);
+                rosterTextNumbers.add(94);
+                rosterTextNumbers.add(95);
+                rosterTextNumbers.add(96);
+                rosterTextNumbers.add(97);
+                rosterTextNumbers.add(104);
+
+                // fill in text fields to number of roster slots based on the game
+
+                ArrayList<String> keys = new ArrayList<String>();
+                keys = (ArrayList<String>) GUI.gamePanel.finalRoster.keySet();
+                for (int i = 0; i < numberOfPlayers; i ++) {
+                    sources.get(rosterTextNumbers.get(i)).get("settings").put("text", keys.get(i));
+                    map.put("sources", sources);
+                }
+
+                // remove slots used
+                for (int k = 0; k < numberOfPlayers; k ++) {
+                    rosterTextNumbers.remove(0);
+                }
+
+                // replace remaining text fields with nothing
+                if (!(rosterTextNumbers.size() == 0)) {
+                    for (int j = 0; j < rosterTextNumbers.size(); j ++) {
+
+                        sources.get(rosterTextNumbers.get(j)).get("settings").put("text","");
+
+                        map.put("sources", sources);
+                    }
+                }
+
+//                for (String player: GUI.gamePanel.finalRoster) {
+//
+//
+//                }
+            }
+
+            JSONObject jo = new JSONObject(map);
+
+            try (FileWriter file = new FileWriter(fileName))
+            {
+                file.write(jo.toString());
+                System.out.println("Successfully updated json object to file...!!");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
+        public void updateOBSTitle() throws IOException {
+
+            if (fileName.equals("")) {
+                JFileChooser jfc = new JFileChooser();
+                jfc.showDialog(null,"Please select your OBS configuration file (JSON). This can be found in %appdata%/obs-studio folder/basic/scenes");
+                jfc.setVisible(true);
+                fileName = jfc.getSelectedFile().getAbsolutePath();
+            }
+            // UPDATE OBS
+            // create object mapper instance
+            ObjectMapper mapper = new ObjectMapper();
+
+            Map<String, ArrayList<LinkedHashMap<String, LinkedHashMap<String, String>>>> map = mapper.readValue(Paths.get(fileName).toFile(), Map.class);
+            ArrayList<LinkedHashMap<String, LinkedHashMap<String, String>>> sources = map.get("sources");
+
+            // change text to new text
+            sources.get(34).get("settings").put("text", GUI.gamePanel.title);
+            System.out.println(GUI.gamePanel.title);
             map.put("sources", sources);
 
             JSONObject jo = new JSONObject(map);
 
-            //Write into the file
-            FileOutputStream fos = new FileOutputStream("EsportsTest.json");
-            DataOutputStream outStream = new DataOutputStream(new BufferedOutputStream(fos));
-            outStream.writeUTF(jo.toString());
-            outStream.close();
-            System.out.println("Successfully updated json object to file...!!");
-
-//            try (FileWriter file = new FileWriter("/EsportsTest.json"))
-//            {
-//                file.write(jo.toString());
-//                System.out.println("Successfully updated json object to file...!!");
-//            }
-
-
+            try (FileWriter file = new FileWriter(fileName))
+            {
+                file.write(jo.toString());
+                System.out.println("Successfully updated json object to file...!!");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         public ArrayList<String> sortAlphabetically(ArrayList<String> availablePlayers) {
