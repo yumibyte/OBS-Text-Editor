@@ -5,11 +5,16 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static java.lang.System.in;
 
 public class GamePanel {
 
+    static String font = "Helvetica Neue";
     static JPanel mainPanel = new JPanel();
     static int xSelection = 50;
 
@@ -38,10 +43,20 @@ public class GamePanel {
 
     // generate stream
     static JButton generateStreamButton = new JButton("Generate Stream");
+    static Map<String, String> finalRoster = new HashMap<String, String>();
 
     GamePanel() {
 
+        try {
+            UIManager.setLookAndFeel("com.formdev.flatlaf.FlatLightLaf");
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        JFrame.setDefaultLookAndFeelDecorated(true);
+
         mainPanel.setLayout(null);
+
+        JFrame.setDefaultLookAndFeelDecorated(true);
 
         // header
         backButton.setBounds(10, 10, 100, 50);
@@ -50,7 +65,7 @@ public class GamePanel {
         mainPanel.add(backButton);
 
         JLabel largeTitle = new JLabel("OBS Esports Editor");
-        largeTitle.setFont(new Font("Serif",Font.BOLD, 30));
+        largeTitle.setFont(new Font(font,Font.BOLD, 30));
         largeTitle.setBounds(50, 50, 300, 100);
         mainPanel.add(largeTitle);
 
@@ -62,14 +77,14 @@ public class GamePanel {
         mainPanel.add(separator);
 
         // top right label
-        gameTitleLabel.setFont(new Font("Serif",Font.BOLD, 30));
+        gameTitleLabel.setFont(new Font(font,Font.BOLD, 30));
         gameTitleLabel.setForeground(Color.gray);
         gameTitleLabel.setBounds(900, 50, 300, 100);
         mainPanel.add(gameTitleLabel);
 
         // CONTENTS
         // topmost label above title input
-        streamTitle.setFont(new Font("Serif",Font.BOLD, 25));
+        streamTitle.setFont(new Font(font,Font.BOLD, 25));
         streamTitle.setForeground(Color.darkGray);
         streamTitle.setBounds(xSelection, 130, 300, 100);
         mainPanel.add(streamTitle);
@@ -80,20 +95,15 @@ public class GamePanel {
 
         // Roster selection
         JLabel rosterSelectionLabel = new JLabel("Roster Selection");
-        rosterSelectionLabel.setFont(new Font("Serif",Font.BOLD, 25));
+        rosterSelectionLabel.setFont(new Font(font,Font.BOLD, 25));
         rosterSelectionLabel.setForeground(Color.darkGray);
         rosterSelectionLabel.setBounds(xSelection, 280, 300, 100);
         mainPanel.add(rosterSelectionLabel);
 
         // roster selection
-        int yRosterLabel = 405;
-        int yRosterLabelDropdown = 470;
-        int yFilter = 435;
-        int yClearRoster = 515;
-
         // OW and LoL require playerTypes
         rosterSelectionPlayerTypeLabel = new JLabel("Player type");
-        rosterSelectionPlayerTypeLabel.setFont(new Font("Serif", Font.PLAIN, 15));
+        rosterSelectionPlayerTypeLabel.setFont(new Font(font, Font.PLAIN, 15));
         rosterSelectionPlayerTypeLabel.setForeground(Color.darkGray);
         rosterSelectionPlayerTypeLabel.setBounds(xSelection + 300, 335, 300, 100);
         mainPanel.add(rosterSelectionPlayerTypeLabel);
@@ -104,7 +114,7 @@ public class GamePanel {
         mainPanel.add(playerTypeDropdown);
 
         JLabel rosterSelectionPlayerNameLabel = new JLabel("Player name");
-        rosterSelectionPlayerNameLabel.setFont(new Font("Serif",Font.PLAIN, 15));
+        rosterSelectionPlayerNameLabel.setFont(new Font(font,Font.PLAIN, 15));
         rosterSelectionPlayerNameLabel.setForeground(Color.darkGray);
         rosterSelectionPlayerNameLabel.setBounds(xSelection + 5, 335, 300, 100);
         mainPanel.add(rosterSelectionPlayerNameLabel);
@@ -115,25 +125,19 @@ public class GamePanel {
         mainPanel.add(playerDropdown);
 
         filterIcon = new ImageIcon(new ImageIcon((getClass().getResource("filterSymbol.png"))).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
-//        filterIcon = filterIcon.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
-//        ImageIcon(getClass().getResource("folder16.png"));
-
-        //        filterIcon = new ImageIcon(new ImageIcon("/filterSymbol.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
-
         filterButton = new JButton(filterIcon);
-        filterButton.setFont(new Font("Serif",Font.PLAIN, 15));
+        filterButton.setFont(new Font(font,Font.PLAIN, 15));
         filterButton.setForeground(Color.darkGray);
-        filterButton.setBounds(xSelection + 250, 367, 40, 40);
+        filterButton.setBounds(xSelection + 252, 357, 40, 40);
         filterButton.addActionListener(new GUI());
         mainPanel.add(filterButton);
 
         clearRosterButton = new JButton("Clear Roster");
-        clearRosterButton.setBounds(xSelection - 5, 460, 100, 40);
+        clearRosterButton.setBounds(xSelection - 5, 460, 120, 40);
         clearRosterButton.addActionListener(new GUI());
         mainPanel.add(clearRosterButton);
-
         // generate stream
-        generateStreamButton.setFont(new Font("Serif",Font.BOLD, 25));
+        generateStreamButton.setFont(new Font(font,Font.BOLD, 25));
         generateStreamButton.setBackground(Color.blue);
         generateStreamButton.setForeground(Color.white);
         generateStreamButton.setOpaque(true);
@@ -143,17 +147,17 @@ public class GamePanel {
 
         // PREVIEW PANEL
         JLabel streamPreviewTitle = new JLabel("Stream Preview");
-        streamPreviewTitle.setFont(new Font("Serif",Font.BOLD, 25));
+        streamPreviewTitle.setFont(new Font(font,Font.BOLD, 25));
         streamPreviewTitle.setForeground(Color.gray);
         streamPreviewTitle.setBounds(740, 130, 300, 100);
         mainPanel.add(streamPreviewTitle);
 
-        streamPreviewLabel.setFont(new Font("Serif",Font.PLAIN, 15));
+        streamPreviewLabel.setFont(new Font(font,Font.PLAIN, 15));
         streamPreviewLabel.setForeground(Color.gray);
         streamPreviewLabel.setBounds(740, 220, 500, 350);
         mainPanel.add(streamPreviewLabel);
 
-        streamPreviewPlayerSelectedLabel.setFont(new Font("Serif",Font.PLAIN, 15));
+        streamPreviewPlayerSelectedLabel.setFont(new Font(font,Font.PLAIN, 15));
         streamPreviewPlayerSelectedLabel.setForeground(Color.gray);
         streamPreviewPlayerSelectedLabel.setBounds(700, 200, 500, 100);
         mainPanel.add(streamPreviewPlayerSelectedLabel);
@@ -174,16 +178,17 @@ public class GamePanel {
     public void updateStreamPreview() {
 
         String streamPreviewString = "";
-
-        System.out.println(title);
         streamPreviewString += title + "\n\n" +
                 "Roster: \n";
 
+
         for (int i = 0; i < selectedPlayers.size(); i ++) {
             if (selectedPlayerTypes.size() == selectedPlayers.size()) {
-                streamPreviewString += "- " + selectedPlayerTypes.get(i) + ": " + selectedPlayers.get(i) + "\n";
+                streamPreviewString += "    \u2022  " + selectedPlayerTypes.get(i) + " | " + selectedPlayers.get(i) + "\n";
+                finalRoster.put(selectedPlayers.get(i), selectedPlayerTypes.get(i));
             } else {
-                streamPreviewString += "- " + selectedPlayers.get(i) + "\n";
+                streamPreviewString += "    \u2022  " + selectedPlayers.get(i) + "\n";
+                finalRoster.put(selectedPlayers.get(i), null);
 
             }
         }
