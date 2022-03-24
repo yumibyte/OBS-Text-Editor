@@ -5,8 +5,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,7 +41,6 @@ public class GamePanel {
 
     // generate stream
     static JButton generateStreamButton = new JButton("Generate Stream");
-    static Map<String, String> finalRoster = new HashMap<String, String>();
 
     GamePanel() {
 
@@ -178,17 +175,17 @@ public class GamePanel {
     public void updateStreamPreview() {
 
         String streamPreviewString = "";
+
+        System.out.println(title);
         streamPreviewString += title + "\n\n" +
                 "Roster: \n";
 
 
         for (int i = 0; i < selectedPlayers.size(); i ++) {
             if (selectedPlayerTypes.size() == selectedPlayers.size()) {
-                streamPreviewString += "    \u2022  " + selectedPlayerTypes.get(i) + " | " + selectedPlayers.get(i) + "\n";
-                finalRoster.put(selectedPlayers.get(i), selectedPlayerTypes.get(i));
+                streamPreviewString += "    \u2022  " + selectedPlayerTypes.get(i) + ": " + selectedPlayers.get(i) + "\n";
             } else {
                 streamPreviewString += "    \u2022  " + selectedPlayers.get(i) + "\n";
-                finalRoster.put(selectedPlayers.get(i), null);
 
             }
         }
