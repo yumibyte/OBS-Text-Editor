@@ -3,7 +3,10 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.InputStream;
 import java.util.ArrayList;
+
+import static java.lang.System.in;
 
 public class GamePanel {
 
@@ -111,8 +114,11 @@ public class GamePanel {
         playerDropdown.addActionListener(new GUI());
         mainPanel.add(playerDropdown);
 
-//        ImageIcon icon = new ImageIcon("src/main/java/filterSymbol.png");
-        filterIcon = new ImageIcon(new ImageIcon("src/main/java/filterSymbol.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        filterIcon = new ImageIcon(new ImageIcon((getClass().getResource("filterSymbol.png"))).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+//        filterIcon = filterIcon.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
+//        ImageIcon(getClass().getResource("folder16.png"));
+
+        //        filterIcon = new ImageIcon(new ImageIcon("/filterSymbol.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
 
         filterButton = new JButton(filterIcon);
         filterButton.setFont(new Font("Serif",Font.PLAIN, 15));
