@@ -1,3 +1,5 @@
+import com.formdev.flatlaf.FlatLightLaf;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -6,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GUI implements ActionListener {
     static GameSelectionPanel gameSelectionPanel = new GameSelectionPanel();
@@ -16,20 +20,30 @@ public class GUI implements ActionListener {
     static JFrame frame = new JFrame("Esports OBS Editor");
     static JPanel mainPanel = new JPanel();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+        try {
+            UIManager.setLookAndFeel("com.formdev.flatlaf.FlatLightLaf");
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        JFrame.setDefaultLookAndFeelDecorated(true);
 
         frame.setSize(1320, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
         // default to game selection
         mainPanel = gameSelectionPanel.retrievePanel();
         frame.setContentPane(mainPanel);
+        mainPanel.updateUI();
         frame.setVisible(true);
+
+
 
     }
 
     public void swapToGamePanel() {
+
         // swap panels
 //        gamePanel.retrievePanel().removeAll();
 //        gamePanel = new GamePanel();
@@ -55,9 +69,8 @@ public class GUI implements ActionListener {
 
 
         }
-
         mainPanel = gamePanel.retrievePanel();
-
+        mainPanel.updateUI();
         ArrayList<String> noFilter = new ArrayList<String>();
         noFilter.add("None");
         gameBaseFunctionality.determineAvailablePlayers(noFilter);
