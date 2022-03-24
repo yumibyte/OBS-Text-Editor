@@ -3,6 +3,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -164,7 +165,11 @@ public class GUI implements ActionListener {
         }
 
         else if (e.getSource() == gamePanel.generateStreamButton) {
-            gameBaseFunctionality.generateStream();
+            try {
+                gameBaseFunctionality.generateStream();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
 
         }
 

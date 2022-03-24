@@ -1,5 +1,7 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jdk.jfr.internal.tool.Main;
 import jdk.nashorn.internal.parser.JSONParser;
+import org.json.simple.JSONObject;
 import sun.misc.ClassLoaderUtil;
 
 import javax.annotation.Resources;
@@ -10,10 +12,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GameBase {
@@ -110,19 +109,42 @@ public class GameBase {
 
         }
 
-        public void generateStream() {
+        public void generateStream() throws IOException {
 
             // determine title based on game type
             System.out.println("generated stream!");
 
-//            for (String[] value: rosterData) {
-//                for (String val: value) {
-//                    System.out.println(val);
-//                }
-//            }
-            // update stream title
+            // create object mapper instance
 
-            // update roster
+            ObjectMapper mapper = new ObjectMapper();
+
+            // convert JSON file to map
+            String contents = "";
+            try (InputStream inputStream = getClass().getResourceAsStream("/EsportsTest.json")) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                contents = reader.lines().collect(Collectors.joining(System.lineSeparator()));
+            }
+            Map<String, ArrayList<LinkedHashMap<String, LinkedHashMap<String, String>>>> map = mapper.readValue(contents, Map.class);
+            ArrayList<LinkedHashMap<String, LinkedHashMap<String, String>>> sources = map.get("sources");
+
+            // change text to new text
+            sources.get(1).get("settings").put("monitor", "4");
+            map.put("sources", sources);
+
+            JSONObject jo = new JSONObject(map);
+
+            //Write into the file
+            FileOutputStream fos = new FileOutputStream("EsportsTest.json");
+            DataOutputStream outStream = new DataOutputStream(new BufferedOutputStream(fos));
+            outStream.writeUTF(jo.toString());
+            outStream.close();
+            System.out.println("Successfully updated json object to file...!!");
+
+//            try (FileWriter file = new FileWriter("/EsportsTest.json"))
+//            {
+//                file.write(jo.toString());
+//                System.out.println("Successfully updated json object to file...!!");
+//            }
 
 
         }
