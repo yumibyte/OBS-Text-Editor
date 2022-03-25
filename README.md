@@ -15,11 +15,11 @@
 
 ## RUNNING THE JAR
 - Build all dependencies by navigating to the topmost level of the war_build folder. Type in cmd:
-'''
+```
 build.bat
-'''
+```
 - Run the GUI. Type in cmd:
-'''
+```
 gui.bat
-'''
+```
 
